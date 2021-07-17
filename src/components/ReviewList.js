@@ -32,7 +32,7 @@ const ReviewWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 40px auto;
+  margin: 0px auto;
   padding-top: 15px;
   width: 800px;
   border-top: 1px solid ${Color.borderLightGray};
