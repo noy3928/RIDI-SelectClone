@@ -11,8 +11,8 @@ const Header = () => {
                 <MainHeader>
                     <Header1>
                         <LogoBox>
-                            <LogoImg src={ridiSelect} maxWidth="102px" />
-                            <LogoImg src={ridiBooks} maxWidth="90px" />
+                            <LogoImg src={ridiSelect} maxWidth="102px" maxHeight="16px" />
+                            <LogoImg src={ridiBooks} maxWidth="90px" maxHeight="13px"/>
                         </LogoBox>
                         <LoginAndSearchBox>  
                             <Login>로그인</Login>
@@ -50,6 +50,8 @@ const MainHeader = styled.div`
 width:880px;
 display:flex;
 flex-direction: column;
+padding: 0px 40px;
+box-sizing:border-box;
 `
 
 const Header1 = styled.div`
@@ -62,7 +64,6 @@ width:100%;
 const Header2 = styled.div`
     width:100%;
     height:42px;
-    background: #fafafa;
     display:flex;
     justify-content: flex-start;
 `
@@ -71,7 +72,7 @@ const LogoBox = styled.div`
 display:flex;
     width: 70%;
     height: auto;
-    padding: 20px;
+    padding: 20px 0px 0px 0px;
 `
 
 const LogoImg = styled.img`
@@ -124,6 +125,7 @@ display:flex;
 justify-content:center;
 box-sizing:border-box;
 align-items:center;
+
 `
 
 const MenuList = styled.ul`
@@ -132,8 +134,9 @@ width:880px;
 display:flex;
 justify-content:flex-start;
 margin:0px;
-padding:0px;
+padding:0px 40px;
 height:20px;
+box-sizing:border-box;
 `
 
 const Menu = styled.li`
