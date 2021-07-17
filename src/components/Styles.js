@@ -3,13 +3,12 @@ import styled from "styled-components";
 
 const Grid = styled.div`
   box-sizing: border-box;
-  display: flex;
+  display: ${(props) => props.display ? `display : ${props.display};` : "flex"};
   flex-direction: ${(props) =>
     props.flex_direction === "column" ? "column" : "row"};
   ${(props) => (props.border ? `border: ${props.border};` : "")}
   ${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
   width: ${(props) => (props.width ? props.width : "100%")};
-  min-width: 50px;
   height: ${(props) => (props.height ? props.height : "100%")};
   align-items: ${(props) => (props.align ? props.align : "center")};
   justify-content: ${(props) =>
@@ -17,11 +16,43 @@ const Grid = styled.div`
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")}
   ${(props) => (props.is_root ? `width: 100vw; height: 100vh;` : "")}
-  ${(props) =>
-    props.hover ? `&:hover{cursor: pointer; background-color: #44444455;}` : ""}
     ${(props) => (props.color ? `color:${props.color};` : "")}
   ${(props) => (props.textAlign ? `text-align: center;` : "")}
+  ${(props) => (props.maxHeight ? `max-height: ${props.maxHeight};` : "")}
+  ${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : "")}
 `;
+
+const Image = styled.img`
+width: ${(props) => (props.width ? props.width : "100%")};
+min-width: 50px;
+height: ${(props) => (props.height ? props.height : "100%")};
+${(props) => (props.maxHeight ? `max-height: ${props.maxHeight};` : "")}
+${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : "")}
+`
+
+const Button = styled.button`
+box-sizing: border-box;
+flex-direction: ${(props) =>
+    props.flex_direction === "column" ? "column" : "row"};
+${(props) => (props.border ? `border: ${props.border};` : "")}
+${(props) => (props.bg ? `background-color: ${props.bg};` : "")}
+width: ${(props) => (props.width ? props.width : "100%")};
+height: ${(props) => (props.height ? props.height : "100%")};
+align-items: ${(props) => (props.align ? props.align : "center")};
+justify-content: ${(props) =>
+    props.justify_contents ? props.justify_contents : "flex-start"};
+${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+${(props) => (props.padding ? `padding: ${props.padding};` : "")}
+  ${(props) => (props.color ? `color:${props.color};` : "")}
+${(props) => (props.textAlign ? `text-align: center;` : "")}
+${(props) => (props.maxHeight ? `max-height: ${props.maxHeight};` : "")}
+${(props) => (props.maxWidth ? `max-width: ${props.maxWidth};` : "")}
+${(props) => (props.border ? `border: ${props.border};` : "")}
+${(props) => (props.borderRadius ? `border-radius: ${props.borderRadius};` : "")}
+${(props) => (props.pointer ? `cursor: pointer;` : "")}
+${(props) => (props.fontSize ? `font-size:${props.fontSize};` : "")}
+${(props) => (props.fontWeight ? `font-weight:${props.fontWeight};` : "")}
+`
 
 const Text = (props) => {
   if (props.type === "title") {
@@ -47,9 +78,9 @@ const H1 = styled.h1`
 `;
 
 const P = styled.p`
-  ${(props) => (props.margin ? `margin:${props.margin};` : "")}
+  ${(props) => (props.margin ? `margin:${props.margin};` : "margin: 0px")}
   ${(props) => (props.color ? `margin:${props.color};` : "")}
-  font-size: 1em;
+  ${(props) => (props.fontSize ? `font-size:${props.fontSize};` : "")}
 `;
 
 const Span = styled.span`
@@ -67,4 +98,9 @@ const Span = styled.span`
 //   ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
 // `;
 
-export { Grid, Text };
+const A = styled.a`
+ padding: 6px 4px 12px;
+ border-bottom: ${(props) => props.borderBottom ? `1px solid #828990;` : ""}
+`
+
+export { Grid, Text, Image, Button, A };
