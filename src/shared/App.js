@@ -1,7 +1,9 @@
 import React from 'react';
 import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router-dom";
-// import Login from "../pages/Login";
+import Login from "../pages/Login";
+import Signup from '../pages/Signup';
+import BookDetail from "../pages/BookDetail";
 import { history } from '../redux/ConfigStore';
 import Header from '../components/Header';
 import "../App.css"
@@ -14,8 +16,10 @@ const App = () => {
       <Header />
       <ConnectedRouter history={history}>
         <Switch>
-           <Route path="/" exact component={Main} />
-          {/* <Route path="/login" exact component={Login} /> */}
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/bookdetail" exact component={BookDetail} />
+          <Route path="/" exact component={Main} />
         </Switch>
       </ConnectedRouter>
     </MainContainer>
