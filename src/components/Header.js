@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ridiSelect from "../img/ridiSelect.png"
 import ridiBooks from "../img/ridiBooks.png"
 import { Image, Grid, Text, Button, A } from "./Styles";
@@ -11,6 +11,10 @@ import { history } from "../redux/ConfigStore";
 const Header = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((store) => store.user.is_login);
+
+  useEffect(() => {
+    dispatch(userActions.loginCheckStorage());
+  })
 
   const logOut = () => {
     dispatch(userActions.logOutLocalStorage());

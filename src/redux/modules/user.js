@@ -68,6 +68,20 @@ const logOutLocalStorage = () => {
   }
 }
 
+const loginCheckStorage = () => {
+  return function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("is_token");
+    const id = localStorage.getItem("login_id");
+    if (!token) {
+      return;
+    } else {
+      dispatch(setUser({
+        username: id,
+      }))
+    }
+  }
+}
+
 // Reducer
 export default handleActions(
   {
@@ -87,6 +101,7 @@ const actionCreators = {
   signupAPI,
   loginAPI,
   logOutLocalStorage,
+  loginCheckStorage,
 }
 
 export { actionCreators };
