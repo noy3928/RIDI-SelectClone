@@ -4,37 +4,50 @@ import ridiBooks from "../img/ridiBooks.png"
 import { Image, Grid, Text, Button, A } from "./Styles";
 import styled from "styled-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/ConfigStore";
+
 const Header = () => {
-    return (
-        <React.Fragment>
-            <HeaderBox>
-                <MainHeader>
-                    <Header1>
-                        <LogoBox>
-                            <LogoImg src={ridiSelect} maxWidth="102px" maxHeight="16px" />
-                            <LogoImg src={ridiBooks} maxWidth="90px" maxHeight="13px"/>
-                        </LogoBox>
-                        <LoginAndSearchBox>  
-                            <Login>로그인</Login>
-                        </LoginAndSearchBox>
-                    </Header1>
-                    <Header2>
-                      <Category borderBottom><CategoryText>도서</CategoryText></Category>  
-                      <Category><CategoryText>아티클</CategoryText></Category>
-                    </Header2>
-                </MainHeader>
-            </HeaderBox>
-           
-            <MenuListBox>
-                <MenuList>
-                    <Menu>홈</Menu>
-                    <Menu>최신 업데이트</Menu>
-                    <Menu>카테고리</Menu>
-                    <Menu>마이 셀렉트</Menu>
-                </MenuList>
-            </MenuListBox>
-        </React.Fragment>
-    );
+  const dispatch = useDispatch();
+  const is_login = useSelector((store) => store.user.is_login);
+
+  const logOut = () => {
+    dispatch(userActions.logOutLocalStorage());
+  }
+
+  return (
+    <React.Fragment>
+      <HeaderBox>
+        <MainHeader>
+          <Header1>
+            <LogoBox>
+              <LogoImg src={ridiSelect} maxWidth="102px" maxHeight="16px" />
+              <LogoImg src={ridiBooks} maxWidth="90px" maxHeight="13px" />
+            </LogoBox>
+            <LoginAndSearchBox>
+              {is_login ? <Login onClick={logOut}>로그아웃</Login>
+                : <Login onClick={() => { history.push("/login") }}>로그인</Login>
+              }
+            </LoginAndSearchBox>
+          </Header1>
+          <Header2>
+            <Category borderBottom><CategoryText>도서</CategoryText></Category>
+            <Category><CategoryText>아티클</CategoryText></Category>
+          </Header2>
+        </MainHeader>
+      </HeaderBox>
+
+      <MenuListBox>
+        <MenuList>
+          <Menu>홈</Menu>
+          <Menu>최신 업데이트</Menu>
+          <Menu>카테고리</Menu>
+          <Menu>마이 셀렉트</Menu>
+        </MenuList>
+      </MenuListBox>
+    </React.Fragment>
+  );
 }
 
 const HeaderBox = styled.div`
@@ -76,8 +89,8 @@ display:flex;
 `
 
 const LogoImg = styled.img`
-    max-width: ${(props) => (props.maxWidth ? `${props.maxWidth};`:"")}
-    max-height: ${(props) => (props.maxHeight ? `${props.maxHeight};`:"")}
+    max-width: ${(props) => (props.maxWidth ? `${props.maxWidth};` : "")}
+    max-height: ${(props) => (props.maxHeight ? `${props.maxHeight};` : "")}
     width: auto;
     height: auto;
 `
@@ -92,7 +105,7 @@ const LoginAndSearchBox = styled.div`
 
 const Login = styled.button`
 height:28px;
-width:58px; 
+width:auto; 
 border:1px solid #d1d5d9;
 border-radius:3px;
 cursor:pointer;
