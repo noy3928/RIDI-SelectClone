@@ -2,17 +2,22 @@ import React, {useEffect} from "react";
 import styled from "styled-components";
 import {history} from "../redux/ConfigStore"
 import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as bookActions} from "../redux/modules/book"
+
 
 
 
 const BookList = () => {
     const dispatch = useDispatch();
+    useEffect(()=> {
+        dispatch(bookActions.loadBookAPI())
+    },[])
     const book_list = useSelector((state) => state.book.book_list);
-    const test_bookList = book_list.slice(0,24)
-    console.log(test_bookList)
+    console.log(book_list)
 
-    return(<MainContainer>
-        {test_bookList.map((l, idx) => {
+    return(
+    <MainContainer>
+        {book_list.map((l, idx) => {
             return(
                 <ThumnailBox key={l.id}>   
                     <ThumnailImg src={l.imgUrl} onClick={()=>{history.push(`/bookdetail/${l.id}`)}} />
@@ -20,11 +25,7 @@ const BookList = () => {
             </ThumnailBox>
             )
         })}
-
-        
-     
     </MainContainer>);
-
 }
 
 const MainContainer = styled.div`
