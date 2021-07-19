@@ -45,9 +45,11 @@ const loginAPI = (id, pwd) => {
         "password": pwd,
       }
     }).then((response) => {
+      console.log(response.data);
       if (response.data) {
         localStorage.setItem("is_token", response.data);
         localStorage.setItem("login_id", id);
+
         dispatch(setUser({
           username: id,
         }))
