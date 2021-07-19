@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 import { Input } from "../shared/Styles";
 
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as reviewActions } from "../redux/modules/review";
+
 const ReviewWrite = (props) => {
+  const dispatch = useDispatch();
+  const is_login = useSelector((store) => store.user.is_login);
+
+  const [comments, setComments] = useState();
+
+  // const { bookId } = props;
+  const bookId = 12345;
+
+  const onChageReview = (e) => {
+    setComments(e.target.value);
+  }
+
+  const write = () => {
+    // 로그인 안한 상태라면 alert창 띄우고 로그인 페이지로 이동 (focus 이벤트핸들러 주기 - 변경예정)
+    if (!is_login) {
+      window.alert("로그인 후 작성 가능합니다.");
+      return;
+    }
+
+    dispatch(reviewActions.addReviewAPI(bookId, comments));
+    setComments("");
+  }
 
   return (
     <WriteWrapper>
       <Input
+        _onChange={onChageReview}
+        value={comments}
         multiLine
         placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
       ></Input>
@@ -15,7 +42,9 @@ const ReviewWrite = (props) => {
         <NoticeButton>
           리뷰작성 유의사항
         </NoticeButton>
-        <WriteButton>
+        <WriteButton
+          onClick={write}
+        >
           리뷰 남기기
         </WriteButton>
       </ButtonWrapper>
