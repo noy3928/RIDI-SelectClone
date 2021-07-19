@@ -14,7 +14,7 @@ import SortButton from "./SortButton"
 const CategorySwiper = () => {
 return(
 <Swiper
-                navigation={true}
+                // navigation={true}
             spaceBetween={0}
             slidesPerView={9}
             slidesPerGroup={5}
