@@ -119,7 +119,7 @@ const ElTextarea = styled.textarea`
   width: 100%;
   height: 47px;
   resize: none;
-  color: ${Color.basicGray};
+  color: ${Color.borderGray};
   border: 2px solid ${Color.borderGray};
   border-radius: 5px;
   &:focus,

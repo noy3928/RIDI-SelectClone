@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 import Book from "./modules/book"
 
 import user from "./modules/user";
-import review from "./modules/review";
 // import book from "./modules/product";
 // import comment from "./modules/image";
 
@@ -18,7 +17,7 @@ const rootReducer = combineReducers({
   // user,
 >>>>>>> bfaa09ed91381b785c5b1a5acdc361b50ffda067
   // book,
-  review,
+  // comment,
   router: connectRouter(history),
 });
 
