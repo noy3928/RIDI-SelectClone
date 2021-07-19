@@ -13,9 +13,7 @@ const ReviewList = (props) => {
   const { id } = props;
 
   useEffect(() => {
-    if (!comment_list[id]) {
-      dispatch(reviewActions.getReviewAPI(id));
-    }
+    dispatch(reviewActions.getReview(id));
   }, []);
 
   return (

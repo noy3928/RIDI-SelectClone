@@ -119,7 +119,6 @@ export default handleActions(
 // ActionCreator export
 const actionCreators = {
   addReview,
-  setReview,
   getReview,
   addReviewAPI,
   getReviewAPI,
