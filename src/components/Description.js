@@ -6,14 +6,16 @@ import { useSelector } from "react-redux";
 const Description = (props) => {
   const book_info = useSelector((state) => state.book.book_info)
   const book = book_info[0]
+  console.log(book);
 
   return (
+    // <React.Fragment></React.Fragment>
     <DescWrapper>
       {book.bookIntro == "1" ? "" : <IntroWrapper>
         <IntroTitle>책 소개</IntroTitle>
         <IntroText>
-          {book.bookIntro.replace("책 소개\n","").split('\n').map( line => {
-            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+          {book.bookIntro.replace("책 소개\n","").split('\n').map( (line,idx) => {
+            return (<div key={idx} style={{margin:"0px"}}>{line}<br/></div>)
           })
         }
         </IntroText>
@@ -21,8 +23,8 @@ const Description = (props) => {
       {book.writerIntro == "1" ? "" : <IntroWrapper>
         <IntroTitle>저자 소개</IntroTitle>
         <IntroText>
-        {book.writerIntro.replace("저자 소개\n","").split('\n').map( line => {
-            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+        {book.writerIntro.replace("저자 소개\n","").split('\n').map( (line,idx) => {
+            return (<div key={idx} style={{margin:"0px"}}>{line}<br/></div>)
           })
         }
         </IntroText>
@@ -30,8 +32,8 @@ const Description = (props) => {
       {book.bookIndex == "1" ? "" : <IntroWrapper>
         <IntroTitle>목차</IntroTitle>
         <IntroText>
-        {book.bookIndex.replace("목차\n","").split('\n').map( line => {
-            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+        {book.bookIndex.replace("목차\n","").split('\n').map( (line,idx) => {
+            return (<div key={idx} style={{margin:"0px"}}>{line}<br/></div>)
           })
         }
         </IntroText>
@@ -39,8 +41,8 @@ const Description = (props) => {
       {book.publicationDate == "1" ? "" : <IntroWrapper>
         <IntroTitle>출간일</IntroTitle>
         <IntroText>
-        {book.publicationDate.replace("출간일\n","").split('\n').map( line => {
-            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+        {book.publicationDate.replace("출간일\n","").split('\n').map( (line,idx) => {
+            return (<div key={(idx)} style={{margin:"0px"}}>{line}<br/></div>)
           })
         }
         </IntroText>
