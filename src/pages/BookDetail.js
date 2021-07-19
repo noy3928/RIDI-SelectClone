@@ -18,8 +18,8 @@ const BookDetail = (props) => {
 
   return (
     <>
-      {/* <BookInfo />
-      <Description /> */}
+      <BookInfo />
+      <Description />
       <ReviewWrite id={book_id} />
       <ReviewList id={book_id} />
     </>

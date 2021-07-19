@@ -14,7 +14,6 @@ const ReviewWrite = (props) => {
   const [comments, setComments] = useState();
 
   const { id } = props;
-  console.log(id);
 
   const onChageReview = (e) => {
     setComments(e.target.value);
