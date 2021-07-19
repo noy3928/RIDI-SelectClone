@@ -9,24 +9,29 @@ import { actionCreators as reviewActions } from "../redux/modules/review";
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
   const is_login = useSelector((store) => store.user.is_login);
+  const username = useSelector((store) => store.user.username);
 
   const [comments, setComments] = useState();
 
-  // const { bookId } = props;
-  const bookId = 12345;
+  const { id } = props;
 
   const onChageReview = (e) => {
     setComments(e.target.value);
   }
 
   const write = () => {
-    // 로그인 안한 상태라면 alert창 띄우고 로그인 페이지로 이동 (focus 이벤트핸들러 주기 - 변경예정)
     if (!is_login) {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-
-    dispatch(reviewActions.addReviewAPI(bookId, comments));
+    dispatch(reviewActions.addReviewAPI(
+      {
+        comments: comments,
+        username: username,
+        bookId: id,
+        stars: 4
+      }
+    ));
     setComments("");
   }
 

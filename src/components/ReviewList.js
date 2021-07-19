@@ -1,31 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as reviewActions } from "../redux/modules/review";
+
 const ReviewList = (props) => {
+  const dispatch = useDispatch();
+  const comment_list = useSelector(store => store.review.list);
+  console.log(comment_list);
+
+  const { id } = props;
+
+  useEffect(() => {
+    if (!comment_list[id]) {
+      dispatch(reviewActions.getReviewAPI(id));
+    }
+  }, []);
+
+  return (
+    <>
+      {comment_list.map(c => {
+        return (
+          <ReviewItem key={c.id} {...c} />
+        )
+      })}
+    </>
+  );
+}
+
+export default ReviewList;
+
+
+const ReviewItem = (props) => {
+  const { username, comments, createdAt } = props;
 
   return (
     <ReviewWrapper>
       <Wrapper>
         <ReviewerInfo>
           <User>
-            yeon1234
+            {username}
           </User>
           <Date>
-            2021.05.12
+            {createdAt}
           </Date>
         </ReviewerInfo>
         <Content>
-          시간 가는 줄도 모르고 완독했습니다. 구병모 작가님 소설들의 등장인물들은 항상 입체적이라는 느낌이 듭니다. 인물들에게 정이
-          쌓였는지, 여운이 길게 남네요.. 너무 만족스럽습니다. 감사합니다.
-          그리고 문체에 관해선 문장의 호흡이 여느 소설보다는 긴 느낌이 있습니다. 하지만 번역체는 아니고, 작가님의 개성이
+          {comments}
         </Content>
+        <DelBtn>
+          삭제
+        </DelBtn>
       </Wrapper>
     </ReviewWrapper>
   );
 }
-
-export default ReviewList;
 
 const ReviewWrapper = styled.div`
   display: flex; 
@@ -68,4 +98,9 @@ const Content = styled.p`
   color: #212529;
   font-size: 13px;
   line-height: 1.5em;
+`;
+
+const DelBtn = styled.button`
+  width: 10px;
+  height: 10px;
 `;

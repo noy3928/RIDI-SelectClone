@@ -6,12 +6,13 @@ import ReviewList from "../components/ReviewList";
 
 const BookDetail = (props) => {
   const book_id = props.match.params.id;
+
   return (
     <>
-      <BookInfo id={book_id}/>
-      <Description id={book_id}/>
-      <ReviewWrite />
-      <ReviewList />
+      <BookInfo id={book_id} />
+      <Description id={book_id} />
+      <ReviewWrite id={book_id} />
+      <ReviewList id={book_id} />
     </>
   );
 }
