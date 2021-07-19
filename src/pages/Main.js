@@ -12,7 +12,7 @@ const Main = () => {
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        dispatch(bookActions.loadBookSV())
+        dispatch(bookActions.loadBookAPI())
     })
 
     return(

@@ -12,9 +12,7 @@ const BookInfo = (props) => {
   return (
     <BookConatiner url={book.imgUrl}>
       <BookWrapper bgColor={book.bg_color}>
-        <BigImage
-          src={book.imgUrl}
-        />
+        <BigImage src={book.imgUrl}/>
         <InfoWrapper>
           <Category>{book.category_detail}</Category>
           <BookName>{book.bookname}</BookName >
@@ -32,7 +30,7 @@ export default BookInfo;
 const BookConatiner = styled.div`
   background-image: ${(props) => (props.url ? `url(${props.url});`:"")}
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
   background-size: 40%;
   width: 100%;
 `;
