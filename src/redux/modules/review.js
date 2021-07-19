@@ -51,8 +51,9 @@ const getReviewAPI = (bookId) => {
     api
       .get(`/comment/${bookId}`)
       .then((response) => {
-        console.log(response.data);
-        dispatch(setReview(response.data));
+        console.log("------",response);
+
+        dispatch(getReview(response.data));
         console.log("리뷰 가져오기 성공");
       })
       .catch((error) => {
@@ -99,6 +100,7 @@ export default handleActions(
       draft.list.unshift(action.payload.comments);
     }),
     [GET_REVIEW]: (state, action) => produce(state, (draft) => {
+      console.log("리듀서 안에서------------")
       draft.review = action.payload.review;
     }),
     [SET_REVIEW]: (state, action) => produce(state, (draft) => {

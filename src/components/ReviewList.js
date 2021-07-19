@@ -7,7 +7,7 @@ import { actionCreators as reviewActions } from "../redux/modules/review";
 
 const ReviewList = (props) => {
   const dispatch = useDispatch();
-  const comment_list = useSelector(store => store);
+  const comment_list = useSelector(store => store.review.review);
   console.log(comment_list);
 
   const { id } = props;
@@ -19,11 +19,11 @@ const ReviewList = (props) => {
   console.log(id);
   return (
     <>
-      {/* {comment_list.map(c => {
+      {comment_list.map(c => {
         return (
           <ReviewItem key={c.id} {...c} />
         )
-      })} */}
+      })}
     </>
   );
 }

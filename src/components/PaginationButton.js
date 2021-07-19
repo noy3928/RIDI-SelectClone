@@ -13,7 +13,7 @@ const PaginationButton = () => {
     const pageCount = book_list? Math.ceil(book_list.length / 24) : 0;
 
     if(pageCount === 1) return null;
-    const pages = _.range(1, 2)
+    const pages = _.range(1, 11)
     const pagination = (pageNum) => {
         setcurrentPage(pageNum);
         const startIndex = (pageNum - 1) * 24;
@@ -29,9 +29,8 @@ const PaginationButton = () => {
     <nav className="d-flex justify-content-center">
             <ul className="pagination">
                 {pages.map((page,idx) => (
-                    <li className={page === currentPage ? "page-item active" : "page-item"} key={idx}> <p className="page-link" onClick={()=>pagination(page)}>{page}</p></li>
+                    <li className={page === currentPage ? "page-item active" : "page-item"} key={idx}> <p className="page-link">{page}</p></li>
                 ))}
-                
             </ul>
         </nav>);
 }
