@@ -1,19 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
+import { useSelector } from "react-redux";
+
 
 const BookInfo = (props) => {
+  const book_list = useSelector((state) => state.book.book_list)
+  const book_idx = book_list.findIndex((p) => p.id === parseInt(props.id));
+  const book = book_list[book_idx]
 
   return (
-    <BookConatiner>
-      <BookWrapper>
+    <BookConatiner url={book.imgUrl}>
+      <BookWrapper bgColor={book.bg_color}>
         <BigImage
-          src="https://img.ridicdn.net/cover/734001567/xxlarge?dpi=xxhdpi"
+          src={book.imgUrl}
         />
         <InfoWrapper>
-          <Category>소설 > 한국소설</Category>
-          <BookName>파과</BookName >
-          <Writer>구병모</Writer >
+          <Category>{book.category_detail}</Category>
+          <BookName>{book.bookname}</BookName >
+          <Writer>{book.book_detail_elements}</Writer >
           <Star>4.4점</Star>
           <StarWriter>(19명)</StarWriter>
         </InfoWrapper>
@@ -25,8 +30,10 @@ const BookInfo = (props) => {
 export default BookInfo;
 
 const BookConatiner = styled.div`
-  background-image: url("https://img.ridicdn.net/cover/734001567/xxlarge?dpi=xxhdpi");
+  background-image: ${(props) => (props.url ? `url(${props.url});`:"")}
   background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 40%;
   width: 100%;
 `;
 
@@ -36,8 +43,10 @@ const BookWrapper = styled.div`
   padding: 50px 0;
   justify-content: center;
   align-items: center;
-  background-color: rgba(121, 11, 53, 0.95);
+  ${(props)=> props.bgColor ? `${props.bgColor};`:""};
 `;
+
+//rgba(121, 11, 53, 0.95)
 
 const InfoWrapper = styled.div`
   margin: 0 0 0 60px;

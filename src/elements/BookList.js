@@ -1,109 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
+import {history} from "../redux/ConfigStore"
+import { useSelector, useDispatch } from "react-redux";
+
 
 
 const BookList = () => {
+    const dispatch = useDispatch();
+    const book_list = useSelector((state) => state.book.book_list);
+    const test_bookList = book_list.slice(0,24)
+    console.log(test_bookList)
+
     return(<MainContainer>
-        {/* 우선테스트로 이렇게 다 그리고 데이터 불러올때는 map으로 */}
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
+        {test_bookList.map((l, idx) => {
+            return(
+                <ThumnailBox key={l.id}>   
+                    <ThumnailImg src={l.imgUrl} onClick={()=>{history.push(`/bookdetail/${l.id}`)}} />
+                    <BookTitle onClick={()=>{history.push(`/bookdetail/${l.id}`)}}>{l.bookname}</BookTitle>
+            </ThumnailBox>
+            )
+        })}
 
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
-        <ThumnailBox>   
-            <ThumnailImg src={"https://img.ridicdn.net/cover/862001394/small?dpi=xhdpi"}/>
-            <BookTitle>팅커벨 죽이기</BookTitle>
-        </ThumnailBox>
+        
+     
     </MainContainer>);
 
 }
@@ -117,7 +36,6 @@ grid-template-rows: 1fr 1fr 1fr 1fr;
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 grid-row-gap: 20px;
 padding:16px 0px 60px 0px;
-
 `
 
 const ThumnailBox = styled.div`
@@ -129,6 +47,7 @@ const ThumnailImg = styled.img`
 width:auto;
 max-width:120px;
 height:auto;
+cursor:pointer;
 `
 
 const BookTitle = styled.div`
@@ -137,6 +56,7 @@ font-weight:400;
 margin:10px 0px 0px;
 font-family: "NotoSansRegular";
 color:#6f7478;
+cursor:pointer;
 `
 
 export default BookList;

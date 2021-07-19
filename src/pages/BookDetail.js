@@ -5,10 +5,11 @@ import ReviewWrite from "../components/ReviewWrite";
 import ReviewList from "../components/ReviewList";
 
 const BookDetail = (props) => {
+  const book_id = props.match.params.id;
   return (
     <>
-      <BookInfo />
-      <Description />
+      <BookInfo id={book_id}/>
+      <Description id={book_id}/>
       <ReviewWrite />
       <ReviewList />
     </>

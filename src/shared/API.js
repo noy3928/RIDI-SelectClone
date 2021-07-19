@@ -8,4 +8,4 @@ const userAPI = {
 
 }
 
-export { userAPI };
+export { userAPI, api };
