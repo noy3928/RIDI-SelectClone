@@ -4,6 +4,8 @@ import Color from "../shared/Color";
 import { Input, LogoImage, Button } from "../shared/Styles";
 import logo from "../shared/ridibooks_logo.png";
 
+// 로그인 페이지
+
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/ConfigStore";
