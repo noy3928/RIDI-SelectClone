@@ -5,14 +5,14 @@ import api from "../../shared/API";
 
 // Action
 const ADD_REVIEW = "ADD_REVIEW";
-// const GET_REVIEW = "GET_REVIEW";
+const GET_REVIEW = "GET_REVIEW";
 // const SET_REVIEW = "SET_REVIEW";
 // const EDIT_REVIEW = "EDIT_REVIEW";
 // const REMOVE_REVIEW = "REMOVE_REVIEW";
 
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
-// const getReview = createAction(GET_REVIEW, (review) => ({ review }));
+const getReview = createAction(GET_REVIEW, (review) => ({ review }));
 // const setReview = createAction(SET_REVIEW, (bookId, comments) => ({ bookId, comments }));
 // const editReview = createAction(EDIT_REVIEW, (bookId, comments) => ({ bookId, comments }));
 // const removeReview = createAction(REMOVE_REVIEW, (commentId) => ({ commentId }));
@@ -92,12 +92,12 @@ const addReviewAPI = (comments) => {
 // Reducer
 export default handleActions(
   {
-    [ADD_REVIEW]: (state, action) => produce(state, (draft) => {
-      draft.list.unshift(action.payload.comments);
-    }),
-    // [GET_REVIEW]: (state, action) => produce(state, (draft) => {
-    //   draft.list[action.payload.bookId] = action.payload.comment_list;
+    // [SET_REVIEW]: (state, action) => produce(state, (draft) => {
+    //   draft.list.unshift(action.payload.comments);
     // }),
+    [GET_REVIEW]: (state, action) => produce(state, (draft) => {
+      draft.list = action.payload.comments;
+    }),
     // [SET_REVIEW]: (state, action) => produce(state, (draft) => {
     //   draft.list[action.payload.bookId] = action.payload.comment_list;
     // }),
@@ -118,8 +118,8 @@ export default handleActions(
 
 // ActionCreator export
 const actionCreators = {
-  addReview,
-  // getReview,
+  // setReview,
+  getReview,
   addReviewAPI,
   // getReviewAPI,
   // editReviewAPI,

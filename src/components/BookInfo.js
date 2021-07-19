@@ -5,24 +5,23 @@ import { useSelector } from "react-redux";
 
 
 const BookInfo = (props) => {
-  const book = useSelector((state) => state.book.book_info)
-  console.log(book)
+  const book_info = useSelector((state) => state.book.book_info)
+  const book = book_info[0]
 
 
   return (
-    <React.Fragment></React.Fragment>
-    // <BookConatiner url={book.imgUrl}>
-    //   <BookWrapper bgColor={book.bgColor}>
-    //     <BigImage src={book.imgUrl}/>
-    //     <InfoWrapper>
-    //       <Category>{book.categoryDetail}</Category>
-    //       <BookName>{book.bookname}</BookName >
-    //       <Writer>{book.bookDetailElements}</Writer >
-    //       <Star>4.4점</Star>
-    //       <StarWriter>(19명)</StarWriter>
-    //     </InfoWrapper>
-    //   </BookWrapper>
-    // </BookConatiner>
+    <BookConatiner url={book.imgUrl}>
+      <BookWrapper bgColor={book.bgColor}>
+        <BigImage src={book.imgUrl}/>
+        <InfoWrapper>
+          <Category>{book.categoryDetail}</Category>
+          <BookName>{book.bookname}</BookName >
+          <Writer>{book.bookDetailElements}</Writer >
+          <Star>4.4점</Star>
+          <StarWriter>(19명)</StarWriter>
+        </InfoWrapper>
+      </BookWrapper>
+    </BookConatiner>
   );
 }
 

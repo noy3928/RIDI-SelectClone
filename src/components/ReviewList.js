@@ -13,7 +13,7 @@ const ReviewList = (props) => {
   const { id } = props;
 
   // useEffect(() => {
-  //   dispatch(reviewActions.getReview(id));
+  //   dispatch(reviewActions.getReviewAPI(id));
   // }, []);
 
   console.log(id);
