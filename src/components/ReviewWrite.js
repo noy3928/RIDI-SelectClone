@@ -14,6 +14,7 @@ const ReviewWrite = (props) => {
   const [comments, setComments] = useState();
 
   const { id } = props;
+  console.log(id);
 
   const onChageReview = (e) => {
     setComments(e.target.value);
@@ -36,6 +37,7 @@ const ReviewWrite = (props) => {
   }
 
   return (
+
     <WriteWrapper>
       <Input
         _onChange={onChageReview}
@@ -54,6 +56,7 @@ const ReviewWrite = (props) => {
         </WriteButton>
       </ButtonWrapper>
     </WriteWrapper>
+
   );
 }
 

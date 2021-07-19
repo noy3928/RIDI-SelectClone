@@ -5,25 +5,24 @@ import { useSelector } from "react-redux";
 
 
 const BookInfo = (props) => {
-  const book_list = useSelector((state) => state.book.book_list)
-  const book_idx = book_list.findIndex((p) => p.id === parseInt(props.id));
-  const book = book_list[book_idx]
+  const book = useSelector((state) => state.book.book_info)
+  console.log(book)
+
 
   return (
-    <BookConatiner url={book.imgUrl}>
-      <BookWrapper bgColor={book.bg_color}>
-        <BigImage
-          src={book.imgUrl}
-        />
-        <InfoWrapper>
-          <Category>{book.category_detail}</Category>
-          <BookName>{book.bookname}</BookName >
-          <Writer>{book.book_detail_elements}</Writer >
-          <Star>4.4점</Star>
-          <StarWriter>(19명)</StarWriter>
-        </InfoWrapper>
-      </BookWrapper>
-    </BookConatiner>
+    <React.Fragment></React.Fragment>
+    // <BookConatiner url={book.imgUrl}>
+    //   <BookWrapper bgColor={book.bgColor}>
+    //     <BigImage src={book.imgUrl}/>
+    //     <InfoWrapper>
+    //       <Category>{book.categoryDetail}</Category>
+    //       <BookName>{book.bookname}</BookName >
+    //       <Writer>{book.bookDetailElements}</Writer >
+    //       <Star>4.4점</Star>
+    //       <StarWriter>(19명)</StarWriter>
+    //     </InfoWrapper>
+    //   </BookWrapper>
+    // </BookConatiner>
   );
 }
 
@@ -32,7 +31,7 @@ export default BookInfo;
 const BookConatiner = styled.div`
   background-image: ${(props) => (props.url ? `url(${props.url});`:"")}
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
   background-size: 40%;
   width: 100%;
 `;

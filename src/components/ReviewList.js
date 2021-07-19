@@ -12,10 +12,11 @@ const ReviewList = (props) => {
 
   const { id } = props;
 
-  useEffect(() => {
-    dispatch(reviewActions.getReview(id));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(reviewActions.getReview(id));
+  // }, []);
 
+  console.log(id);
   return (
     <>
       {comment_list.map(c => {
