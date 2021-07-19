@@ -108,6 +108,9 @@ height: auto;
 border-bottom:${(props) => (props.borderBottom ? `2px solid #828990;` : "")};
 padding: 6px 4px 12px;
 margin: 0px 5px;
+color:#9fa7ac;
+text-decoration:none;
+cursor:pointer;
 `
 
 const CategoryText = styled.p`

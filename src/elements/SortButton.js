@@ -1,18 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
+
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 10,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(10),
   },
 }));
 
@@ -33,15 +31,11 @@ export default function NativeSelects() {
 
   return (
     <div>
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl variant="outlined" className={classes.formControl} >
         <Select
           native
-        //   value={state.age}
           onChange={handleChange}
-          inputProps={{
-            name: 'age',
-            id: 'outlined-age-native-simple',
-          }}
+          style={{width:"100px", height:"25px", padding:"0px"}}
         >
           <option value="">최신순</option>
           <option value={10}>인기순</option>
@@ -50,19 +44,3 @@ export default function NativeSelects() {
     </div>
   );
 }
-
-{/* <FormControl className={classes.formControl}>
-        <NativeSelect
-          value={state.age}
-          onChange={handleChange}
-          name="age"
-          className={classes.selectEmpty}
-          inputProps={{ 'aria-label': 'age' }}
-        >
-          <option value="">None</option>
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
-        </NativeSelect>
-        <FormHelperText>With visually hidden label</FormHelperText>
-      </FormControl> */}
