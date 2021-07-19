@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import {api} from "../../shared/API"
+import api from "../../shared/API"
 
 
 // Action

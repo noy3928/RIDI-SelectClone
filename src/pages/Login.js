@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 import { Input, LogoImage, Button } from "../shared/Styles";
 import logo from "../shared/ridibooks_logo.png";
 
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/ConfigStore";
+
 const Login = (props) => {
+  const dispatch = useDispatch();
+
+  const [id, setId] = useState('');
+  const [pwd, setPwd] = useState('');
+
+  const onChnageId = (e) => {
+    setId(e.target.value);
+  }
+  const onChangePwd = (e) => {
+    setPwd(e.target.value);
+  }
+
+  const login = () => {
+    if (id === "" || pwd === "") {
+      window.alert("아이디 혹은 비밀번호를 입력해주세요");
+      return;
+    }
+    dispatch(userActions.loginAPI(id, pwd));
+  }
 
   return (
     <Wrapper>
@@ -16,18 +39,22 @@ const Login = (props) => {
 
         <FoamWrapper>
           <Input
+            value={id}
+            _onChange={onChnageId}
             borderRadius="5px 5px 0px 0px"
             type="text"
             placeholder={"아이디"}
           />
           <Input
+            value={pwd}
+            _onChange={onChangePwd}
             borderRadius="0px 0px 5px 5px"
             type="password"
             placeholder={"비밀번호"}
             margin="0px 0px 10px 0px"
           />
           <Button
-            BasicBtn
+            _onClick={login}
             width="100%"
             color={Color.white}
             borderColor={Color.borderBlue}
@@ -36,7 +63,9 @@ const Login = (props) => {
             로그인
           </Button>
           <Button
-            BasicBtn
+            _onClick={() => {
+              history.push("/signup");
+            }}
             width="100%"
             color={Color.basicGray}
             borderColor={Color.borderLightGray}

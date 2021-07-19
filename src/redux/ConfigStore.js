@@ -2,18 +2,16 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import thunk from "redux-thunk";
-import Book from "./modules/book"
 
-// import user from "./modules/user";
-// import book from "./modules/product";
-// import comment from "./modules/image";
+import user from "./modules/user";
+import book from "./modules/book";
+import review from "./modules/review";
 
 const history = createBrowserHistory();
 const rootReducer = combineReducers({
-  book: Book,
-  // user,
-  // book,
-  // comment,
+  user,
+  book,
+  review,
   router: connectRouter(history),
 });
 

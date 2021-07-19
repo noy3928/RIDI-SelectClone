@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router-dom";
 import Login from "../pages/Login";
@@ -9,8 +9,21 @@ import Header from '../components/Header';
 import "../App.css"
 import styled from 'styled-components';
 import Main from "../pages/Main"
+import { useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("is_token");
+  const _is_token = localStorage.getItem(token) ? true : false;
+
+  useEffect(() => {
+    if (_is_token) {
+      dispatch(userActions.loginCheckStorage());
+    }
+  }, []);
+
   return (
     <MainContainer >
       <ConnectedRouter history={history}>
