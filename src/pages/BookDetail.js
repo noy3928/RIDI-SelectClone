@@ -10,14 +10,15 @@ import { actionCreators as bookActions} from "../redux/modules/book"
 const BookDetail = (props) => {
   const dispatch = useDispatch();
   const book_id = props.match.params.id;
+
   useEffect(()=> {
     dispatch(bookActions.getBookDetailAPI(book_id))
-  },[book_id])
+  },[])
 
   return (
     <>
-      {/* <BookInfo />
-      <Description /> */}
+      <BookInfo />
+      <Description />
       <ReviewWrite />
       <ReviewList />
     </>

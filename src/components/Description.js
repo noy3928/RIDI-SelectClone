@@ -4,49 +4,48 @@ import Color from "../shared/Color";
 import { useSelector } from "react-redux";
 
 const Description = (props) => {
-  const book = useSelector((state) => state.book.book_info)
-  console.log(book)
+  const book_info = useSelector((state) => state.book.book_info)
+  const book = book_info[0]
 
   return (
-    <React.Fragment></React.Fragment>
-    // <DescWrapper>
-    //   {book.bookIntro == "1" ? "" : <IntroWrapper>
-    //     <IntroTitle>책 소개</IntroTitle>
-    //     <IntroText>
-    //       {book.bookIntro.replace("책 소개\n","").split('\n').map( line => {
-    //         return (<div style={{margin:"0px"}}>{line}<br/></div>)
-    //       })
-    //     }
-    //     </IntroText>
-    //   </IntroWrapper>}
-    //   {book.writerIntro == "1" ? "" : <IntroWrapper>
-    //     <IntroTitle>저자 소개</IntroTitle>
-    //     <IntroText>
-    //     {book.writerIntro.replace("저자 소개\n","").split('\n').map( line => {
-    //         return (<div style={{margin:"0px"}}>{line}<br/></div>)
-    //       })
-    //     }
-    //     </IntroText>
-    //   </IntroWrapper>}
-    //   {book.bookIndex == "1" ? "" : <IntroWrapper>
-    //     <IntroTitle>목차</IntroTitle>
-    //     <IntroText>
-    //     {book.bookIndex.replace("목차\n","").split('\n').map( line => {
-    //         return (<div style={{margin:"0px"}}>{line}<br/></div>)
-    //       })
-    //     }
-    //     </IntroText>
-    //   </IntroWrapper>}
-    //   {book.publicationDate == "1" ? "" : <IntroWrapper>
-    //     <IntroTitle>출간일</IntroTitle>
-    //     <IntroText>
-    //     {book.publicationDate.replace("출간일\n","").split('\n').map( line => {
-    //         return (<div style={{margin:"0px"}}>{line}<br/></div>)
-    //       })
-    //     }
-    //     </IntroText>
-    //   </IntroWrapper>}
-    // </DescWrapper>
+    <DescWrapper>
+      {book.bookIntro == "1" ? "" : <IntroWrapper>
+        <IntroTitle>책 소개</IntroTitle>
+        <IntroText>
+          {book.bookIntro.replace("책 소개\n","").split('\n').map( line => {
+            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+          })
+        }
+        </IntroText>
+      </IntroWrapper>}
+      {book.writerIntro == "1" ? "" : <IntroWrapper>
+        <IntroTitle>저자 소개</IntroTitle>
+        <IntroText>
+        {book.writerIntro.replace("저자 소개\n","").split('\n').map( line => {
+            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+          })
+        }
+        </IntroText>
+      </IntroWrapper>}
+      {book.bookIndex == "1" ? "" : <IntroWrapper>
+        <IntroTitle>목차</IntroTitle>
+        <IntroText>
+        {book.bookIndex.replace("목차\n","").split('\n').map( line => {
+            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+          })
+        }
+        </IntroText>
+      </IntroWrapper>}
+      {book.publicationDate == "1" ? "" : <IntroWrapper>
+        <IntroTitle>출간일</IntroTitle>
+        <IntroText>
+        {book.publicationDate.replace("출간일\n","").split('\n').map( line => {
+            return (<div style={{margin:"0px"}}>{line}<br/></div>)
+          })
+        }
+        </IntroText>
+      </IntroWrapper>}
+    </DescWrapper>
   );
 }
 

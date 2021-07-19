@@ -49,7 +49,7 @@ const getBookDetailAPI = (id) => {
 
     api.get(`/book/${id}`).then((res)=> {
       // console.log(res.data)
-      dispatch(getBookDetail(res))
+      dispatch(getBookDetail(res.data))
     })
   };
 }
