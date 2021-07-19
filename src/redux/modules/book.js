@@ -23,7 +23,7 @@ const changeCategory = createAction(CHANGE_CATEGORY, (category) => ({
 // initailState
 const initialState = {
   book_list: [],
-  book_info:[{}],
+  book_info:[{bookIntro:"1",bookIndex:"1",publicationDate:"1",writerIntro:"1"}],
   category: 100,
 }
 
