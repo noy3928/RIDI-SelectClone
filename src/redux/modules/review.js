@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from 'axios';
 import api from "../../shared/API";
 
 // Action
@@ -8,7 +7,6 @@ const ADD_REVIEW = "ADD_REVIEW";
 const GET_REVIEW = "GET_REVIEW";
 const EDIT_REVIEW = "EDIT_REVIEW";
 const DELETE_REVIEW = "DELETE_REVIEW";
-
 const WRITE_TEXT = "WRITE_TEXT";
 
 // ActionCreator

@@ -59,7 +59,7 @@ const PaginationButton = () => {
 
  
     //페이지 전체 슬라이드가 10를 넘지 않을 경우 
-    if(lastSlideNum == 0){
+    if(totalPageNum < 10){
         const belowTen = (totalPageNum % 10) + 1 
         const pages = _.range(startPage, belowTen)
         return(
@@ -71,9 +71,9 @@ const PaginationButton = () => {
                     }}>{page}</PageButton>)
                 })}
             </PaginationBox>
-            <LastPageButton onClick={()=>{
+            {totalPageNum < 10 ? "" : <LastPageButton onClick={()=>{
                 moveToLastPage()
-            }}>마지막</LastPageButton>
+            }}>마지막</LastPageButton>}
         </PaginationWrapper>
         )
     }
@@ -104,7 +104,7 @@ const PaginationButton = () => {
 
     }
 
-    if(lastSlideNum == currentSlideNum){
+    if(lastSlideNum === currentSlideNum){
         const belowTen = (totalPageNum % 10) 
         const pages = _.range(startPage, startPage + belowTen)
 

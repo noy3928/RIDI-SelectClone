@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const BookInfo = (props) => {
   const book_info = useSelector((state) => state.book.book_info)
-  const book = book_info[0]
+  const book = book_info
 
 
   return (
