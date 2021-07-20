@@ -9,14 +9,16 @@ import { actionCreators as userActions } from '../redux/modules/user';
 
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
-  const [comments, setComments] = useState("");
   const [isEdit, setIsEdit] = useState(false);
-
   const { id } = props;
 
   const is_login = useSelector((store) => store.user.is_login);
   const _username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
+
+  // 내가 쓴 글만 가져오기
+  const _comments = reviewList.find(l => l.username === _username);
+  const [comments, setComments] = useState("");
 
   //리뷰작성확인
   const onChageReview = (e) => {
@@ -68,10 +70,8 @@ const ReviewWrite = (props) => {
 
     if (is_login && (searchUser[0] === _username)) {
       setIsEdit(true);
+      setComments(_comments.comments);
     }
-
-    dispatch(reviewActions.writeTextPage());
-
   }, [reviewList]);
 
 
