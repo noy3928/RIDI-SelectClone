@@ -43,6 +43,7 @@ const Span = styled.span`
 //Input
 const Input = (props) => {
   const {
+    bgColor,
     multiLine,
     boxShadow,
     borderRadius,
@@ -59,6 +60,7 @@ const Input = (props) => {
     padding, } = props;
 
   const styles = {
+    bgColor: bgColor,
     boxShadow: boxShadow,
     borderRadius: borderRadius,
     width: width,
@@ -109,6 +111,7 @@ const ElInput = styled.input`
 `;
 
 const ElTextarea = styled.textarea`
+  background-color: ${({ bgColor }) => bgColor};
   box-sizing: border-box;
   letter-spacing: -0.05em;
   word-spacing: -0.2em;
@@ -120,7 +123,7 @@ const ElTextarea = styled.textarea`
   height: 47px;
   resize: none;
   color: ${Color.basicGray};
-  border: 2px solid ${Color.borderGray};
+  border: ${(props) => props.border};
   border-radius: 5px;
   &:focus,
   &:active {
