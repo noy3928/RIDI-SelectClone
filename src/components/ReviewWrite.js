@@ -27,6 +27,7 @@ const ReviewWrite = (props) => {
     }
 
     const is_same_username = reviewList.filter(testTest);
+    console.log(is_same_username);
 
     if (is_login && is_same_username) {
       setIsEdit(true);
@@ -46,6 +47,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
+    
     dispatch(reviewActions.addReviewAPI(
       {
         comments: comments,

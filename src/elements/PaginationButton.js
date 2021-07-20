@@ -13,12 +13,15 @@ const PaginationButton = () => {
     const dispatch = useDispatch();
     const [currentPage, setcurrentPage] = useState(1)
     const totalPageNum = useSelector((state) => state.book.pageNum)
-    console.log(totalPageNum)
-    let nextPageNum = Math.ceil(totalPageNum/10)
-    const [checkPageNum, setCheckPageNum] = useState(1);
-    const [startPage, setStartPage] = useState(1);
+    const lastSlideNum = Math.ceil(totalPageNum/10) // 전체 슬라이드의 갯수를 구하기 
+    const [currentSlideNum, setCurrentSlideNum] = useState(1); //현재 슬라이드의 번호를 구하기
+    const [startPage, setStartPage] = useState(1); //해당 슬라이드의 첫번째 페이지를 구하기 
     
 
+   //화면이 로드되면 책을 불러오기 
+   useEffect(()=>{
+        dispatch(bookActions.getPageNumAPI())
+    },[])
 
     //page number로 책 로드하기. 
     const getBooksByPage = (pageNumber) => {
@@ -26,26 +29,39 @@ const PaginationButton = () => {
         setcurrentPage(pageNumber)
     }
 
+    //첫번째 페이지로 이동하는 함수 
+    const moveToFirstPage = ()=> {
+        dispatch(bookActions.loadBookAPI(1))
+        setcurrentPage(1)
+        setCurrentSlideNum(1)
+        setStartPage(1)
+    }
 
+    //마지막 페이지로 이동하는 함수 
+    const moveToLastPage = () => {
+        dispatch(bookActions.loadBookAPI(totalPageNum))
+        setcurrentPage(totalPageNum)
+        setCurrentSlideNum(lastSlideNum)
+        setStartPage((lastSlideNum-1)*10 + 1)
+    }
+
+    //다음 슬라이드로 이동하는 함수
     const clickNextButton = () => {
-        setCheckPageNum(checkPageNum +1) 
+        setCurrentSlideNum(currentSlideNum +1) 
         setStartPage(startPage + 10)
     }
 
+    //이전 슬라이드로 이동하는 함수 
     const clickPrevButton = () => {
-        setCheckPageNum(checkPageNum -1)
+        setCurrentSlideNum(currentSlideNum -1)
         setStartPage(startPage - 10)
     }
 
-    useEffect(()=>{
-        dispatch(bookActions.getPageNumAPI())
-    },[])
-
-
-    if(nextPageNum == 0){
+ 
+    //페이지 전체 슬라이드가 10를 넘지 않을 경우 
+    if(lastSlideNum == 0){
         const belowTen = (totalPageNum % 10) + 1 
         const pages = _.range(startPage, belowTen)
-        
         return(
         <PaginationWrapper>
             <PaginationBox>
@@ -55,17 +71,22 @@ const PaginationButton = () => {
                     }}>{page}</PageButton>)
                 })}
             </PaginationBox>
+            <LastPageButton onClick={()=>{
+                moveToLastPage()
+            }}>마지막</LastPageButton>
         </PaginationWrapper>
         )
     }
 
-    if(nextPageNum !== checkPageNum){
+    //페이지 전체 슬라이드가 10개가 넘지만, 
+    if(lastSlideNum !== currentSlideNum){
         const pages = _.range(startPage, startPage+10)
-        console.log("---startpage", startPage)
-        console.log(currentPage)
         return(
         <PaginationWrapper>
-            {checkPageNum > 1 ? <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>: ""}
+            {currentSlideNum > 1 ? <FirstPageButton onClick={()=>{
+                moveToFirstPage()
+            }}>처음</FirstPageButton> : ""}
+            {currentSlideNum > 1 ? <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>: ""}
             <PaginationBox>
                 {pages.map((page, idx)=>{
                     return(<PageButton key={idx} className={page === currentPage ? "active" : null} onClick={()=>{
@@ -76,17 +97,22 @@ const PaginationButton = () => {
             <NextButton onClick={()=>{clickNextButton(); getBooksByPage(startPage + 10)}}>
                <NextIcon src={NextImg}/>
             </NextButton>
-            <LastPageButton>마지막</LastPageButton>
+            <LastPageButton onClick={()=>{
+                moveToLastPage()
+            }}>마지막</LastPageButton>
         </PaginationWrapper>)
 
     }
 
-    if(nextPageNum == checkPageNum){
+    if(lastSlideNum == currentSlideNum){
         const belowTen = (totalPageNum % 10) 
         const pages = _.range(startPage, startPage + belowTen)
+
         return(
         <PaginationWrapper>
-            <FirstPageButton>처음</FirstPageButton>
+            <FirstPageButton onClick={()=>{
+                moveToFirstPage()
+            }}>처음</FirstPageButton>
             <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>
             <PaginationBox>
                 {pages.map((page, idx)=>{
@@ -148,6 +174,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 cursor:pointer;
+margin:0px 6px 0px 0px;
 :hover{
     background: #e7e7eb;
  }

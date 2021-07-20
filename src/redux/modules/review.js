@@ -103,7 +103,6 @@ export default handleActions(
   {
     [WRITE_TEXT]: (state, action) => produce(state, (draft) => {
       draft.text = action.payload.text;
-      console.log(draft.text);
     }),
     [ADD_REVIEW]: (state, action) => produce(state, (draft) => {
       draft.review.unshift(action.payload.comments);
@@ -113,7 +112,6 @@ export default handleActions(
     }),
     [EDIT_REVIEW]: (state, action) => produce(state, (draft) => {
       let idx = draft.review.findIndex((c) => c.id === action.payload.id);
-      console.log(action.payload.comments);
       draft.review[idx] = {
         ...action.payload.comments
       }
