@@ -84,6 +84,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
+    
     dispatch(reviewActions.addReviewAPI(
       {
         comments: comments,

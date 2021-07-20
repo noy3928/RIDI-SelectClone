@@ -28,6 +28,7 @@ const BookList = () => {
     </MainContainer>);
 }
 
+
 const MainContainer = styled.div`
 width:800px;
 margin:0px auto;

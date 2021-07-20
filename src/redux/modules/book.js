@@ -7,6 +7,7 @@ import api from "../../shared/API"
 const LOAD_BOOKS = "book/LOAD_BOOKS";
 const GET_BOOKDETAIL = "book/GET_BOOKDETAIL"
 const CHANGE_CATEGORY = "book/CHANGE_CATEGORY";
+const GET_PAGENUM = "book/GET_PAGENUM";
 
 // ActionCreator
 const loadBooks = createAction(LOAD_BOOKS, (book_list) => ({
@@ -18,6 +19,9 @@ const getBookDetail = createAction(GET_BOOKDETAIL, (book_info) => ({
 const changeCategory = createAction(CHANGE_CATEGORY, (category) => ({
   category,
   }));
+const getPageNum = createAction(GET_PAGENUM,(pageNum)=> ({
+  pageNum,
+}))
 
 
 // initailState
@@ -25,6 +29,7 @@ const initialState = {
   book_list: [],
   book_info:[{bookIntro:"1",bookIndex:"1",publicationDate:"1",writerIntro:"1"}],
   category: 100,
+  pageNum:10,
 }
 
 const loadBookAPI = (pageNumber=1) => {
@@ -50,6 +55,8 @@ const getBookDetailAPI = (id) => {
     api.get(`/book/${id}`).then((res)=> {
       // console.log(res.data)
       dispatch(getBookDetail(res.data))
+    }).catch((err) => {
+      console.log("Detail load error!", err);
     })
   };
 }
@@ -58,6 +65,21 @@ const getCategoryNum = (category=100) => {
   return function(dispatch, getState, {history}){
     dispatch(changeCategory(category))
   }
+}
+
+const getPageNumAPI = () => {
+return function(dispatch, getState, {history}){
+  const category = getState().book.category;
+  api
+  .get(`/category/${category}?page=1`)
+  .then((res)=>{
+    const totalPageNum = res.data.totalPages;
+    dispatch(getPageNum(totalPageNum))
+  }).catch((err) => {
+    console.log("Getting pagenumber error!", err);
+  })
+
+}
 }
 
 // Reducer
@@ -73,6 +95,9 @@ export default handleActions(
       [GET_BOOKDETAIL]:(state,action) => produce(state,(draft)=> {
         draft.book_info = action.payload.book_info
       }),
+      [GET_PAGENUM]:(state,action) => produce(state,(draft)=> {
+        draft.pageNum = action.payload.pageNum
+      })
       },
     initialState
   );
@@ -81,6 +106,7 @@ export default handleActions(
     loadBookAPI,
     getCategoryNum,
     getBookDetailAPI,
+    getPageNumAPI,
   };
   export { actionCreators };
 

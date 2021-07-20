@@ -13,6 +13,8 @@
   }
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+
 @font-face {
   font-family: "NotoSans";
   src: url("./font/Noto_Sans_KR/NotoSansKR-Medium.otf");
@@ -31,4 +33,9 @@
 @font-face {
   font-family: "NotoSansRegular";
   src: url("./font/Noto_Sans_KR/NotoSansKR-Regular.otf");
+}
+
+.active {
+  background-color: #448adf;
+  color: #fafafa;
 }

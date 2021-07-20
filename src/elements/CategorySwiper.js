@@ -8,7 +8,7 @@ import "swiper/components/navigation/navigation.min.css"
 import SwiperCore, { Navigation } from 'swiper/core';
 
 import {CategoryList} from "../shared/CategoryList"
-import {actionCreators} from "../redux/modules/book"
+import {actionCreators as bookActions} from "../redux/modules/book"
 import { useSelector, useDispatch } from "react-redux";
 
 
@@ -26,8 +26,9 @@ const CategorySwiper = () => {
     })
 
     const changeCategoryNum = (num) => {
-        dispatch(actionCreators.getCategoryNum(num))
-        dispatch(actionCreators.loadBookAPI())
+        dispatch(bookActions.getCategoryNum(num))
+        dispatch(bookActions.loadBookAPI())
+        dispatch(bookActions.getPageNumAPI())
     }
  
 return(
