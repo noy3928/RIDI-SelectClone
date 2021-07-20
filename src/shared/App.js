@@ -19,9 +19,7 @@ const App = () => {
   const _is_token = localStorage.getItem(token) ? true : false;
 
   useEffect(() => {
-    if (_is_token) {
-      dispatch(userActions.loginCheckStorage());
-    }
+    dispatch(userActions.loginCheckStorage());
   }, []);
 
   return (

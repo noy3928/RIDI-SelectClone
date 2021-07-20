@@ -17,8 +17,6 @@ const ReviewWrite = (props) => {
   const _username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
-  console.log("---------useEffect전에", _username);
-
   // useEffect(() => {
   //   const testTest = (isName) => {
   //     if (isName.username === username) {
@@ -49,7 +47,6 @@ const ReviewWrite = (props) => {
 
   // }, []);
 
-
   useEffect(() => {
     console.log("--------useEffect안에서", _username);
     const searchUser = reviewList.filter(function (element) { return element.username === _username });
@@ -72,9 +69,6 @@ const ReviewWrite = (props) => {
   }, []);
 
 
-
-
-
   const onChageReview = (e) => {
     setComments(e.target.value);
   }
@@ -84,7 +78,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-    
+
     dispatch(reviewActions.addReviewAPI(
       {
         comments: comments,

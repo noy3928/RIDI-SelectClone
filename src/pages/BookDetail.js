@@ -19,7 +19,6 @@ const BookDetail = (props) => {
 
   return (
     <>
-      <Header />
       <BookInfo />
       <Description />
       <ReviewWrite id={book_id} />
