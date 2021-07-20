@@ -3,7 +3,8 @@ import SortBox from "../components/SortBox";
 import BookList from "../elements/BookList";
 import Footer from "../components/Footer";
 import Header from "../components/Header"
-import PaginationButton from "../components/PaginationButton";
+import PaginationButton from "../elements/PaginationButton";
+import Test from "../components/Test";
 
 const Main = () => {
     return(
