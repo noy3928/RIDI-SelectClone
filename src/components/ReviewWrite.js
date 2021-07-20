@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 import { Input } from "../shared/Styles";
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";
-import { actionCreators as userActions } from '../redux/modules/user';
 
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
+
   const [isEdit, setIsEdit] = useState(false);
   const { id } = props;
 
@@ -16,11 +18,11 @@ const ReviewWrite = (props) => {
   const _username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
-  // 내가 쓴 글만 가져오기
+  // 내가 쓴 리뷰만 가져오기
   const _comments = reviewList.find(l => l.username === _username);
   const [comments, setComments] = useState("");
 
-  //리뷰작성확인
+  // 리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
   }
@@ -47,34 +49,36 @@ const ReviewWrite = (props) => {
 
   //댓글 수정
   const editComment = () => {
-    dispatch(reviewActions.editReviewAPI(id, {
+    dispatch(reviewActions.editReviewAPI({
+      bookId: _comments.bookId,
+      id: _comments.id,
       comments: comments,
-      username: _username,
     }));
   }
 
   //댓글 삭제
   const deleteComment = () => {
-    dispatch(reviewActions.deleteReviewAPI(id));
+    dispatch(reviewActions.deleteReviewAPI({
+      bookId: _comments.bookId,
+      id: _comments.id,
+      comments: comments,
+    }));
+    setComments("");
   }
 
   useEffect(() => {
     const getUserName = reviewList.map(l => l.username)
-    console.log("------유저네임", _username)
     const searchUser = getUserName.filter((l) => l === _username);
-    console.log("-------서치유저", searchUser.length);
 
     if (searchUser.length === 0) {
+      setIsEdit(false);
       return;
     }
-
     if (is_login && (searchUser[0] === _username)) {
       setIsEdit(true);
       setComments(_comments.comments);
     }
   }, [reviewList]);
-
-
 
   if (isEdit) {
     return (
@@ -87,18 +91,15 @@ const ReviewWrite = (props) => {
           multiLine
         ></Input>
         <ButtonWrapper>
-          <NoticeButton>
-            리뷰작성 유의사항
-          </NoticeButton>
           <EditDelBtnWrapper>
-            <WriteButton
+            <EditButton
               onClick={editComment}>
-              수정하기
-            </WriteButton>
-            <WriteButton
+              <CreateIcon />
+            </EditButton>
+            <DeleteButton
               onClick={deleteComment}>
-              삭제하기
-            </WriteButton>
+              <DeleteIcon />
+            </DeleteButton>
           </EditDelBtnWrapper>
         </ButtonWrapper>
       </WriteWrapper>
@@ -126,7 +127,6 @@ const ReviewWrite = (props) => {
       </WriteWrapper>
     )
   }
-
 }
 
 export default ReviewWrite;
@@ -136,7 +136,7 @@ const WriteWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 30px auto;
+  margin: 40px auto;
   width: 800px;
 `;
 
@@ -148,10 +148,39 @@ const ButtonWrapper = styled.div`
 `;
 
 const EditDelBtnWrapper = styled.div`
-  `;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  bottom: 50px;
+  right: 15px;
+  width: 100%;
+`;
 
 const NoticeButton = styled.button`
   width: auto; 
+  font-size: 12px;
+  height: 30px;
+  border: 1px solid ${Color.borderGray};
+  border-radius: 5px;
+  background-color: ${Color.white};
+  color: ${Color.basicGray};
+  font-weight: bold;
+  padding: 0 18px;
+  line-height: 30px;
+  text-align: center;
+`;
+
+const EditButton = styled.div`
+  color: ${Color.basicGray}
+`;
+
+const DeleteButton = styled.div`
+  color: ${Color.basicGray}
+`;
+
+const WriteButton = styled.button`
+  width: auto; 
+  font-size: 12px;
   height: 30px;
   border: 1px solid ${Color.borderGray};
   border-radius: 5px;
@@ -159,20 +188,8 @@ const NoticeButton = styled.button`
   color: ${Color.basicGray};
   font-weight: bold;
   padding: 0 15px;
-  line-height: 30px;
+  line-height: 18px;
   text-align: center;
-`;
-
-const WriteButton = styled.button`
-  cursor: default;
-  opacity: .5;
-  width: 95px;
-  height: 30px;
-  border: 1px solid ${Color.borderBlue};
-  border-radius: 5px;
-  background-color: ${Color.basicBlue};
-  color: ${Color.white};
-  font-weight: bold;
 `;
 
 

@@ -12,9 +12,8 @@ const WRITE_TEXT = "WRITE_TEXT";
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
 const getReview = createAction(GET_REVIEW, (review) => ({ review }));
-const editReview = createAction(EDIT_REVIEW, (bookId, comments) => ({ bookId, comments }));
-const deleteReview = createAction(DELETE_REVIEW, (commentId) => ({ commentId }));
-
+const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
+const deleteReview = createAction(DELETE_REVIEW, (id) => ({ id }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 
 // initailState
@@ -65,14 +64,16 @@ const getReviewAPI = (bookId) => {
   }
 }
 
-const editReviewAPI = (commentId, comments) => {
+const editReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
-    console.log(commentId);
+    const id = comments.id;
+    const bookId = comments.bookId;
+
     api
-      .put(`/comment/${commentId}`, comments)
+      .put(`/comment/${id}`, comments)
       .then((response) => {
-        console.log(response);
-        dispatch(editReview(commentId, response));
+        dispatch(editReview(response.data.comments));
+        dispatch(getReviewAPI(bookId));
         console.log("리뷰 수정 성공");
       })
       .catch((error) => {
@@ -81,14 +82,17 @@ const editReviewAPI = (commentId, comments) => {
   }
 }
 
-const deleteReviewAPI = (id) => {
+const deleteReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
+    const id = comments.id;
+    const bookId = comments.bookId;
+
     api
       .delete(`/comment/${id}`)
       .then((response) => {
         dispatch(deleteReview(id));
+        dispatch(getReviewAPI(bookId));
         console.log("리뷰 삭제 성공");
-
       })
       .catch((error) => {
         console.log("리뷰 삭제 실패", error);
@@ -109,15 +113,10 @@ export default handleActions(
       draft.review = action.payload.review;
     }),
     [EDIT_REVIEW]: (state, action) => produce(state, (draft) => {
-      let idx = draft.review.findIndex((c) => c.id === action.payload.id);
-      draft.review[idx] = {
-        ...action.payload.comments
-      }
+      draft.comments = action.payload.comments;
     }),
     [DELETE_REVIEW]: (state, action) => produce(state, (draft) => {
-      draft.review = draft.review.filter((l, idx) => {
-        return l.id !== action.payload.id;
-      })
+      draft.comments = action.payload.comments;
     })
   }, initailState
 )
