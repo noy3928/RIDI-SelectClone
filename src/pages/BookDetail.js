@@ -3,6 +3,7 @@ import BookInfo from "../components/BookInfo";
 import Description from "../components/Description";
 import ReviewWrite from "../components/ReviewWrite";
 import ReviewList from "../components/ReviewList";
+import Header from "../components/Header";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as bookActions } from "../redux/modules/book"
@@ -18,6 +19,7 @@ const BookDetail = (props) => {
 
   return (
     <>
+      <Header />
       <BookInfo />
       <Description />
       <ReviewWrite id={book_id} />
