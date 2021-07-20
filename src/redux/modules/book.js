@@ -27,7 +27,7 @@ const getPageNum = createAction(GET_PAGENUM,(pageNum)=> ({
 // initailState
 const initialState = {
   book_list: [],
-  book_info:[{bookIntro:"1",bookIndex:"1",publicationDate:"1",writerIntro:"1"}],
+  book_info:{bookIntro:"1",bookIndex:"1",publicationDate:"1",writerIntro:"1"},
   category: 100,
   pageNum:10,
 }

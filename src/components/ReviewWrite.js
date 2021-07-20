@@ -5,6 +5,7 @@ import { Input } from "../shared/Styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";
+import { actionCreators as userActions } from '../redux/modules/user';
 
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
@@ -17,62 +18,12 @@ const ReviewWrite = (props) => {
   const _username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
-  // useEffect(() => {
-  //   const testTest = (isName) => {
-  //     if (isName.username === username) {
-  //       console.log(isName.username);
-  //       console.log(username);
-  //       return true;
-  //     }
-  //   }
-
-  //   const is_same_username = reviewList.filter(testTest);
-
-  //   console.log("--------useEffect안에서", _username);
-  //   const searchUser = reviewList.filter(function (element) { return element.username === _username });
-  //   console.log(searchUser); // 현재 로그인한 사용자가 쓴 글만 찾아서 배열 안에 넣음
-  //   console.log("---------useEffect안에서", _username);
-
-  //   if (searchUser.length === 0) {
-  //     return;
-  //   }
-
-  //   const writedUser = searchUser[0].username;
-  //   console.log(writedUser);
-  //   console.log(_username);
-
-  //   if (is_login && (writedUser === _username)) {
-  //     setIsEdit(true);
-  //   }
-
-  // }, []);
-
-  useEffect(() => {
-    console.log("--------useEffect안에서", _username);
-    const searchUser = reviewList.filter(function (element) { return element.username === _username });
-    console.log(searchUser); // 현재 로그인한 사용자가 쓴 글만 찾아서 배열 안에 넣음
-    console.log("---------useEffect안에서", _username);
-
-    if (searchUser.length === 0) {
-      return;
-    }
-
-    const writedUser = searchUser[0].username;
-    console.log(writedUser);
-    console.log(_username);
-
-    if (is_login && (writedUser === _username)) {
-      setIsEdit(true);
-    }
-
-    dispatch(reviewActions.writeTextPage());
-  }, []);
-
-
+  //리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
   }
 
+  //댓글 작성
   const write = () => {
     if (!is_login) {
       window.alert("로그인 후 작성 가능합니다.");
@@ -92,6 +43,7 @@ const ReviewWrite = (props) => {
     setIsEdit(true);
   }
 
+  //댓글 수정
   const editComment = () => {
     dispatch(reviewActions.editReviewAPI(id, {
       comments: comments,
@@ -99,9 +51,30 @@ const ReviewWrite = (props) => {
     }));
   }
 
+  //댓글 삭제
   const deleteComment = () => {
     dispatch(reviewActions.deleteReviewAPI(id));
   }
+
+  useEffect(() => {
+    const getUserName = reviewList.map(l => l.username)
+    console.log("------유저네임", _username)
+    const searchUser = getUserName.filter((l) => l === _username);
+    console.log("-------서치유저", searchUser.length);
+
+    if (searchUser.length === 0) {
+      return;
+    }
+
+    if (is_login && (searchUser[0] === _username)) {
+      setIsEdit(true);
+    }
+
+    dispatch(reviewActions.writeTextPage());
+
+  }, [reviewList]);
+
+
 
   if (isEdit) {
     return (

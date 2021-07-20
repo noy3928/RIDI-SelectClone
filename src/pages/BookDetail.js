@@ -11,7 +11,6 @@ import { actionCreators as bookActions } from "../redux/modules/book"
 const BookDetail = (props) => {
   const dispatch = useDispatch();
   const book_id = props.match.params.id;
-  console.log(book_id)
 
   useEffect(() => {
     dispatch(bookActions.getBookDetailAPI(book_id))

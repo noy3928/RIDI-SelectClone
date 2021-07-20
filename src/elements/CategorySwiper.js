@@ -9,7 +9,7 @@ import SwiperCore, { Navigation } from 'swiper/core';
 
 import {CategoryList} from "../shared/CategoryList"
 import {actionCreators as bookActions} from "../redux/modules/book"
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
   SwiperCore.use([Navigation]);
@@ -20,9 +20,9 @@ const CategorySwiper = () => {
 
     useEffect(() => {
         const swiper = document.querySelectorAll('.swiper-slide')
-        _CategoryList.map((l,idx) => {
-        swiper[idx].style.setProperty("width", "auto", "important");
-        })
+        _CategoryList.map((l,idx) => (
+        swiper[idx].style.setProperty("width", "auto", "important")
+        ))
     })
 
     const changeCategoryNum = (num) => {

@@ -5,7 +5,6 @@ import Login from "../pages/Login";
 import Signup from '../pages/Signup';
 import BookDetail from "../pages/BookDetail";
 import { history } from '../redux/ConfigStore';
-import Header from '../components/Header';
 import "../App.css"
 import styled from 'styled-components';
 import Main from "../pages/Main"

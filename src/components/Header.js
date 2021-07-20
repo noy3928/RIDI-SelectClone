@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import ridiSelect from "../img/ridiSelect.png"
 import ridiBooks from "../img/ridiBooks.png"
-import { Image, Grid, Text, Button, A } from "./Styles";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +11,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((store) => store.user.is_login);
 
-  useEffect(() => {
-    dispatch(userActions.loginCheckStorage());
-  })
+  // useEffect(() => {
+  //   dispatch(userActions.loginCheckStorage());
+  // })
 
   const logOut = () => {
     dispatch(userActions.logOutLocalStorage());

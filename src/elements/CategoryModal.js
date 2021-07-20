@@ -51,8 +51,12 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+            <h2 id="transition-modal-title">카테고리</h2>
+            <p id="transition-modal-description">소설</p>
+            <p id="transition-modal-description">에세이/시</p>
+            <p id="transition-modal-description">경영/경제</p>
+            <p id="transition-modal-description">자기계발</p>
+            <p id="transition-modal-description">인문/사회/역사</p>
           </div>
         </Fade>
       </Modal>
