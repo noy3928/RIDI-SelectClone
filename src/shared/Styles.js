@@ -43,6 +43,7 @@ const Span = styled.span`
 //Input
 const Input = (props) => {
   const {
+    onSubmit,
     bgColor,
     multiLine,
     boxShadow,
@@ -60,6 +61,7 @@ const Input = (props) => {
     padding, } = props;
 
   const styles = {
+    onSubmit: onSubmit,
     bgColor: bgColor,
     boxShadow: boxShadow,
     borderRadius: borderRadius,
@@ -144,6 +146,8 @@ const LogoImage = styled.div`
 // Button
 const Button = (props) => {
   const {
+    onKeyPress,
+    onSubmit,
     borderColor,
     bgColor,
     color,
@@ -155,6 +159,8 @@ const Button = (props) => {
   } = props;
 
   const styles = {
+    onKeyPress: onKeyPress,
+    onSubmit: onSubmit,
     borderColor: borderColor,
     bgColor: bgColor,
     color: color,
