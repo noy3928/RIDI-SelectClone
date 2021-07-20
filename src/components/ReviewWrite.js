@@ -8,35 +8,72 @@ import { actionCreators as reviewActions } from "../redux/modules/review";
 
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState("");
   const [isEdit, setIsEdit] = useState(false);
 
   const { id } = props;
 
   const is_login = useSelector((store) => store.user.is_login);
-  const username = useSelector((store) => store.user.username);
+  const _username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
+  console.log("---------useEffect전에", _username);
+
+  // useEffect(() => {
+  //   const testTest = (isName) => {
+  //     if (isName.username === username) {
+  //       console.log(isName.username);
+  //       console.log(username);
+  //       return true;
+  //     }
+  //   }
+
+  //   const is_same_username = reviewList.filter(testTest);
+
+  //   console.log("--------useEffect안에서", _username);
+  //   const searchUser = reviewList.filter(function (element) { return element.username === _username });
+  //   console.log(searchUser); // 현재 로그인한 사용자가 쓴 글만 찾아서 배열 안에 넣음
+  //   console.log("---------useEffect안에서", _username);
+
+  //   if (searchUser.length === 0) {
+  //     return;
+  //   }
+
+  //   const writedUser = searchUser[0].username;
+  //   console.log(writedUser);
+  //   console.log(_username);
+
+  //   if (is_login && (writedUser === _username)) {
+  //     setIsEdit(true);
+  //   }
+
+  // }, []);
+
+
   useEffect(() => {
-    const testTest = (isName) => {
-      if (isName.username === username) {
-        console.log(isName.username);
-        console.log(username);
-        return true;
-      }
+    console.log("--------useEffect안에서", _username);
+    const searchUser = reviewList.filter(function (element) { return element.username === _username });
+    console.log(searchUser); // 현재 로그인한 사용자가 쓴 글만 찾아서 배열 안에 넣음
+    console.log("---------useEffect안에서", _username);
+
+    if (searchUser.length === 0) {
+      return;
     }
 
-    const is_same_username = reviewList.filter(testTest);
-    console.log(is_same_username);
+    const writedUser = searchUser[0].username;
+    console.log(writedUser);
+    console.log(_username);
 
-    if (is_login && is_same_username) {
+    if (is_login && (writedUser === _username)) {
       setIsEdit(true);
     }
-  }, []);
 
-  useEffect(() => {
     dispatch(reviewActions.writeTextPage());
   }, []);
+
+
+
+
 
   const onChageReview = (e) => {
     setComments(e.target.value);
@@ -51,19 +88,20 @@ const ReviewWrite = (props) => {
     dispatch(reviewActions.addReviewAPI(
       {
         comments: comments,
-        username: username,
+        username: _username,
         bookId: id,
         stars: 4
       }
     ));
     setComments(comments);
     dispatch(reviewActions.writeTextPage(comments));
+    setIsEdit(true);
   }
 
   const editComment = () => {
     dispatch(reviewActions.editReviewAPI(id, {
       comments: comments,
-      username: username,
+      username: _username,
     }));
   }
 
