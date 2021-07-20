@@ -6,12 +6,17 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 10,
+    margin: theme.spacing(2,0,0,0),
+    minWidth: 5,
   },
-  selectEmpty: {
-    marginTop: theme.spacing(10),
-  },
+  selectControl:{
+    width:"100px", 
+    height:"24px", 
+    padding:"0px",
+    fontSize:"12px",
+    fontWeight:"700",
+    color:"#545a60",
+  }
 }));
 
 export default function NativeSelects() {
@@ -35,7 +40,7 @@ export default function NativeSelects() {
         <Select
           native
           onChange={handleChange}
-          style={{width:"100px", height:"25px", padding:"0px"}}
+          className={classes.selectControl}
         >
           <option value="">최신순</option>
           <option value={10}>인기순</option>

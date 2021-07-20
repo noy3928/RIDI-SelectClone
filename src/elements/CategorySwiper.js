@@ -18,6 +18,7 @@ const CategorySwiper = () => {
     const _CategoryList = swiperCategoryList(_categoryNum)
     const [categoryNum, setCategoryNum] = React.useState(100);
 
+    //카테고리 번호에 따라서 전체 카테고리 번호를 바꿔주기. 이 값은 슬라이드에서 map을 돌릴때 사용된다. 
     useEffect(()=>{
         if(_categoryNum === 100){
             setCategoryNum(100)
@@ -26,8 +27,9 @@ const CategorySwiper = () => {
         }else if(_categoryNum === 300){
             setCategoryNum(300)
         }
-    })
+    },[_categoryNum])
 
+    //슬라이드의 width값을 auto로 만들어주기.
     useEffect(() => {
         const swiper = document.querySelectorAll('.swiper-slide')
         _CategoryList.map((l,idx) => (
@@ -35,6 +37,7 @@ const CategorySwiper = () => {
         ))
     })
 
+    //카테고리 버튼을 누를 때마다, 실행될 함수들. 
     const changeCategoryNum = (num) => {
         dispatch(bookActions.getCategoryNum(num))
         dispatch(bookActions.loadBookAPI())

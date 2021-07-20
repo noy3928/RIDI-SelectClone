@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ridiSelect from "../img/ridiSelect.png"
 import ridiBooks from "../img/ridiBooks.png"
 import styled from "styled-components";
@@ -10,10 +10,6 @@ import { history } from "../redux/ConfigStore";
 const Header = () => {
   const dispatch = useDispatch();
   const is_login = useSelector((store) => store.user.is_login);
-
-  // useEffect(() => {
-  //   dispatch(userActions.loginCheckStorage());
-  // })
 
   const logOut = () => {
     dispatch(userActions.logOutLocalStorage());
@@ -123,10 +119,13 @@ width: auto;
 height: auto;
 border-bottom:${(props) => (props.borderBottom ? `2px solid #828990;` : "")};
 padding: 6px 4px 12px;
-margin: 0px 5px;
+margin-right:15px;
 color:#9fa7ac;
 text-decoration:none;
 cursor:pointer;
+:first-child{
+  color:#222b3a;
+}
 `
 
 const CategoryText = styled.p`
@@ -159,9 +158,15 @@ box-sizing:border-box;
 `
 
 const Menu = styled.li`
+    font-family: "NotoSansRegular";
     margin:0px 25px 0px 0px;
     padding:0px;
     height:20px;
+    font-size:14.5px;
+    :nth-child(3){
+      font-family: "NotoSansBold";
+    }
+
 `
 
 export default Header;

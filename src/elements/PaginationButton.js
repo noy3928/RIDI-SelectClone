@@ -17,6 +17,13 @@ const PaginationButton = () => {
     const lastSlideNum = Math.ceil(totalPageNum/10) // 전체 슬라이드의 갯수를 구하기 
     const [currentSlideNum, setCurrentSlideNum] = useState(1); //현재 슬라이드의 번호를 구하기
     const [startPage, setStartPage] = useState(1); //해당 슬라이드의 첫번째 페이지를 구하기 
+    const categoryNum = useSelector(state => state.book.category);
+
+    useEffect(()=>{
+        setcurrentPage(1)
+        setCurrentSlideNum(1)
+        setStartPage(1)
+    },[categoryNum])
     
 
    //화면이 로드되면 책을 불러오기 

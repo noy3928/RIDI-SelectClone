@@ -9,6 +9,7 @@ import CheckBox from "../elements/CheckBox"
 import { WholeCategory, giveCurrentCategoryName } from '../shared/CategoryList';
 import { actionCreators as bookActions } from '../redux/modules/book';
 import { useDispatch, useSelector } from "react-redux";
+import DownArrow from "../img/downArrow.png"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,7 @@ export default function TransitionsModal() {
     <div>
       <Modalbutton type="button" onClick={handleOpen}>
         {currentCategoryName}
+        <ModalArrow src={DownArrow}/>
       </Modalbutton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -91,13 +93,26 @@ export default function TransitionsModal() {
   );
 }
 
+const ModalButtonWrapper = styled.div`
+
+`
+
+const ModalArrow = styled.img`
+width:auto;
+height:auto;
+max-width:10px;
+max-height:10px;
+margin-left:7px;
+`
+
 const Modalbutton = styled.button`
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size:20px;
+    font-size:19.5px;
     font-weight:600;
     padding: 10px 0px;
+    color:#313538;
 `
 
 const HeadLine = styled.div`
