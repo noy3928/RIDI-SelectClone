@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 import { Input } from "../shared/Styles";
@@ -8,12 +8,34 @@ import { actionCreators as reviewActions } from "../redux/modules/review";
 
 const ReviewWrite = (props) => {
   const dispatch = useDispatch();
-  const is_login = useSelector((store) => store.user.is_login);
-  const username = useSelector((store) => store.user.username);
-
   const [comments, setComments] = useState();
+  const [isEdit, setIsEdit] = useState(false);
 
   const { id } = props;
+
+  const is_login = useSelector((store) => store.user.is_login);
+  const username = useSelector((store) => store.user.username);
+  const reviewList = useSelector((store) => store.review.review);
+
+  useEffect(() => {
+    const testTest = (isName) => {
+      if (isName.username === username) {
+        console.log(isName.username);
+        console.log(username);
+        return true;
+      }
+    }
+
+    const is_same_username = reviewList.filter(testTest);
+
+    if (is_login && is_same_username) {
+      setIsEdit(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(reviewActions.writeTextPage());
+  }, []);
 
   const onChageReview = (e) => {
     setComments(e.target.value);
@@ -32,31 +54,72 @@ const ReviewWrite = (props) => {
         stars: 4
       }
     ));
-    setComments("");
+    setComments(comments);
+    dispatch(reviewActions.writeTextPage(comments));
   }
 
-  return (
+  const editComment = () => {
+    dispatch(reviewActions.editReviewAPI(id, {
+      comments: comments,
+      username: username,
+    }));
+  }
 
-    <WriteWrapper>
-      <Input
-        _onChange={onChageReview}
-        value={comments}
-        multiLine
-        placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
-      ></Input>
-      <ButtonWrapper>
-        <NoticeButton>
-          리뷰작성 유의사항
-        </NoticeButton>
-        <WriteButton
-          onClick={write}
-        >
-          리뷰 남기기
-        </WriteButton>
-      </ButtonWrapper>
-    </WriteWrapper>
+  const deleteComment = () => {
+    dispatch(reviewActions.deleteReviewAPI(id));
+  }
 
-  );
+  if (isEdit) {
+    return (
+      <WriteWrapper>
+        <Input
+          border="none"
+          bgColor={Color.lightGray}
+          _onChange={onChageReview}
+          value={comments}
+          multiLine
+        ></Input>
+        <ButtonWrapper>
+          <NoticeButton>
+            리뷰작성 유의사항
+          </NoticeButton>
+          <EditDelBtnWrapper>
+            <WriteButton
+              onClick={editComment}>
+              수정하기
+            </WriteButton>
+            <WriteButton
+              onClick={deleteComment}>
+              삭제하기
+            </WriteButton>
+          </EditDelBtnWrapper>
+        </ButtonWrapper>
+      </WriteWrapper>
+    );
+  } else {
+    return (
+      <WriteWrapper>
+        <Input
+          border="0.5px solid #d1d5d9"
+          _onChange={onChageReview}
+          value={comments}
+          multiLine
+          placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
+        ></Input>
+        <ButtonWrapper>
+          <NoticeButton>
+            리뷰작성 유의사항
+          </NoticeButton>
+          <WriteButton
+            onClick={write}
+          >
+            리뷰 남기기
+          </WriteButton>
+        </ButtonWrapper>
+      </WriteWrapper>
+    )
+  }
+
 }
 
 export default ReviewWrite;
@@ -76,6 +139,9 @@ const ButtonWrapper = styled.div`
   width: 100%;
   margin-top: 10px;
 `;
+
+const EditDelBtnWrapper = styled.div`
+  `;
 
 const NoticeButton = styled.button`
   width: auto; 
