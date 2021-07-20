@@ -19,9 +19,38 @@ const essay = [
     "시",
 ]
 
-const CategoryList = {
-    fiction,
-    essay,
+const swiperCategoryList = (num) => {
+    if(num < 200){
+        return fiction
+    }else if(num < 300){
+        return essay
+    }else if(num<400){
+        return "자기계발"
+    }else if(num<500){
+        return "인문/사회/역사"
+    }
 }
 
-export {CategoryList}
+const WholeCategory = [
+    {"categoryNum":100, "categoryName":"소설"},
+    {"categoryNum":200, "categoryName":"시/에세이"},
+    {"categoryNum":300, "categoryName":"자기계발"},
+    {"categoryNum":400, "categoryName":"경제경영"},
+    {"categoryNum":500, "categoryName":"인문/사회/역사"},
+]
+
+export const giveCurrentCategoryName = (num)=>{
+    if(num < 200){
+        return "소설"
+    }else if(num < 300){
+        return "시/에세이"
+    }else if(num<400){
+        return "자기계발"
+    }else if(num<500){
+        return "인문/사회/역사"
+    }
+}
+   
+
+
+export {swiperCategoryList, WholeCategory }

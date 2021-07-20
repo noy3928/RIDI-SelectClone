@@ -35,6 +35,11 @@
   src: url("./font/Noto_Sans_KR/NotoSansKR-Regular.otf");
 }
 
+@font-face {
+  font-family: "NotoSansBold";
+  src: url("./font/Noto_Sans_KR/NotoSansKR-Bold.otf");
+}
+
 .active {
   background-color: #448adf;
   color: #fafafa;

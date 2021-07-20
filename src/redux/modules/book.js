@@ -23,7 +23,6 @@ const getPageNum = createAction(GET_PAGENUM,(pageNum)=> ({
   pageNum,
 }))
 
-
 // initailState
 const initialState = {
   book_list: [],
@@ -78,7 +77,6 @@ return function(dispatch, getState, {history}){
   }).catch((err) => {
     console.log("Getting pagenumber error!", err);
   })
-
 }
 }
 

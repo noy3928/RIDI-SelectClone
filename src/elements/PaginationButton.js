@@ -6,6 +6,7 @@ import _ from "lodash";
 
 import NextImg from "../img/NextButton.png"
 import PrevImg from "../img/prevButton.png"
+import DotImg from "../img/three-dots-svgrepo-com.svg"
 
 
 
@@ -71,9 +72,9 @@ const PaginationButton = () => {
                     }}>{page}</PageButton>)
                 })}
             </PaginationBox>
-            {totalPageNum < 10 ? "" : <LastPageButton onClick={()=>{
+            {/* {totalPageNum < 10 ? "" : <LastPageButton onClick={()=>{
                 moveToLastPage()
-            }}>마지막</LastPageButton>}
+            }}>마지막</LastPageButton>} */}
         </PaginationWrapper>
         )
     }
@@ -86,6 +87,7 @@ const PaginationButton = () => {
             {currentSlideNum > 1 ? <FirstPageButton onClick={()=>{
                 moveToFirstPage()
             }}>처음</FirstPageButton> : ""}
+            {currentSlideNum > 1 ? <DotBox><Dot src={DotImg}/></DotBox> : ""}
             {currentSlideNum > 1 ? <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>: ""}
             <PaginationBox>
                 {pages.map((page, idx)=>{
@@ -97,6 +99,7 @@ const PaginationButton = () => {
             <NextButton onClick={()=>{clickNextButton(); getBooksByPage(startPage + 10)}}>
                <NextIcon src={NextImg}/>
             </NextButton>
+            <DotBox><Dot src={DotImg}/></DotBox>
             <LastPageButton onClick={()=>{
                 moveToLastPage()
             }}>마지막</LastPageButton>
@@ -113,6 +116,7 @@ const PaginationButton = () => {
             <FirstPageButton onClick={()=>{
                 moveToFirstPage()
             }}>처음</FirstPageButton>
+            <DotBox><Dot src={DotImg}/></DotBox>
             <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>
             <PaginationBox>
                 {pages.map((page, idx)=>{
@@ -174,7 +178,6 @@ display:flex;
 justify-content:center;
 align-items:center;
 cursor:pointer;
-margin:0px 6px 0px 0px;
 :hover{
     background: #e7e7eb;
  }
@@ -187,7 +190,6 @@ max-height:40px;
 `
 
 const PrevButton = styled.div`
-margin:0px 0px 0px 6px;
 border: 1px solid #d2d5d9;
 height:32px;
 width:42px;
@@ -240,6 +242,23 @@ cursor:pointer;
  font-family: 'Roboto', sans-serif;
  font-size:13px;
  color:#808991;
+`
+
+const DotBox = styled.div`
+width:10px;
+height:32px;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:0px 6px;
+`
+
+const Dot = styled.img`
+width:auto;
+height:auto;
+max-width:8px;
+max-height:8px;
+opacity:0.3;
 `
 
 //#448adf

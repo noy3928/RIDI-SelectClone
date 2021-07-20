@@ -1,22 +1,32 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
+//스와이퍼 라이브러리
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css"
 import SwiperCore, { Navigation } from 'swiper/core';
 
-import {CategoryList} from "../shared/CategoryList"
+import {swiperCategoryList} from "../shared/CategoryList"
 import {actionCreators as bookActions} from "../redux/modules/book"
-import { useDispatch } from "react-redux";
-
-
-  SwiperCore.use([Navigation]);
+import { useDispatch, useSelector } from "react-redux";
 
 const CategorySwiper = () => {
     const dispatch = useDispatch();
-    const _CategoryList = CategoryList.fiction
+    const _categoryNum = useSelector(state => state.book.category)
+    const _CategoryList = swiperCategoryList(_categoryNum)
+    const [categoryNum, setCategoryNum] = React.useState(100);
+
+    useEffect(()=>{
+        if(_categoryNum === 100){
+            setCategoryNum(100)
+        }else if(_categoryNum === 200){
+            setCategoryNum(200)
+        }else if(_categoryNum === 300){
+            setCategoryNum(300)
+        }
+    })
 
     useEffect(() => {
         const swiper = document.querySelectorAll('.swiper-slide')
@@ -33,7 +43,6 @@ const CategorySwiper = () => {
  
 return(
     <Swiper
-            // navigation={true}
             spaceBetween={10}
             slidesPerView={9}
             slidesPerGroup={5}
@@ -42,7 +51,7 @@ return(
             {_CategoryList.map((name,idx) => {
                 return(
                     <SwiperSlide className="swiper-slide" key={idx} ><Category onClick={() => {
-                        changeCategoryNum(100 + idx)
+                        changeCategoryNum(categoryNum + idx)
                     }}>{name}</Category></SwiperSlide>
                 )
             })}
