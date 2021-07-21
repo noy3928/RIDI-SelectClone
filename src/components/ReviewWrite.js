@@ -18,11 +18,11 @@ const ReviewWrite = (props) => {
   const { id } = props;
 
   const is_login = useSelector((store) => store.user.is_login);
-  const _username = useSelector((store) => store.user.username);
+  const username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
   // 내가 쓴 리뷰만 가져오기
-  const _comments = reviewList.find(l => l.username === _username);
+  const myComments = reviewList.find(l => l.username === username);
   const [comments, setComments] = useState("");
 
   //별점메기기 
@@ -39,15 +39,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-
-    dispatch(reviewActions.addReviewAPI(
-      {
-        comments: comments,
-        username: _username,
-        bookId: id,
-        stars: 4
-      }
-    ));
+    dispatch(reviewActions.addReviewAPI(comments, username, id));
     setComments(comments);
     dispatch(reviewActions.writeTextPage(comments));
     setIsEdit(true);
@@ -56,8 +48,8 @@ const ReviewWrite = (props) => {
   //댓글 수정
   const editComment = () => {
     dispatch(reviewActions.editReviewAPI({
-      bookId: _comments.bookId,
-      id: _comments.id,
+      bookId: myComments.bookId,
+      id: myComments.id,
       comments: comments,
     }));
   }
@@ -65,8 +57,8 @@ const ReviewWrite = (props) => {
   //댓글 삭제
   const deleteComment = () => {
     dispatch(reviewActions.deleteReviewAPI({
-      bookId: _comments.bookId,
-      id: _comments.id,
+      bookId: myComments.bookId,
+      id: myComments.id,
       comments: comments,
     }));
     setComments("");
@@ -74,15 +66,15 @@ const ReviewWrite = (props) => {
 
   useEffect(() => {
     const getUserName = reviewList.map(l => l.username)
-    const searchUser = getUserName.filter((l) => l === _username);
+    const searchUser = getUserName.filter((l) => l === username);
 
     if (searchUser.length === 0) {
       setIsEdit(false);
       return;
     }
-    if (is_login && (searchUser[0] === _username)) {
+    if (is_login && (searchUser[0] === username)) {
       setIsEdit(true);
-      setComments(_comments.comments);
+      setComments(myComments.comments);
     }
   }, [reviewList]);
 

@@ -10,8 +10,7 @@ const Color = {
   borderGray: "#d1d5d9",
   basicGray: "#808991",
   lightGray: "#f2f4f5",
-
-  darkGray: "#303538",
+  darkGray: "#40474d",
 
   star: "#fa722e",
 };

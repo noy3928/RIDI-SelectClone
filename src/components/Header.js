@@ -12,7 +12,7 @@ const Header = () => {
   const is_login = useSelector((store) => store.user.is_login);
 
   const logOut = () => {
-    dispatch(userActions.logOutLocalStorage());
+    dispatch(userActions.logOutRemoveCookie());
   }
 
   return (

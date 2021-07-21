@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
+import CommentLikeButton from "./CommentLikeButton";
 
 const ReviewItem = (props) => {
-  const { username, comments, createdAt } = props;
+  const { username, comments, createdAt, id } = props;
 
   return (
     <ReviewWrapper>
@@ -16,9 +17,14 @@ const ReviewItem = (props) => {
             {createdAt}
           </Date>
         </ReviewerInfo>
-        <Content>
-          {comments}
-        </Content>
+        <ContentBox>
+          <Content>
+            {comments}
+          </Content>
+          <ButtonBox>
+            <CommentLikeButton id={id} />
+          </ButtonBox>
+        </ContentBox>
       </Wrapper>
     </ReviewWrapper>
   );
@@ -39,16 +45,27 @@ const ReviewWrapper = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   width: 100%;
 `;
 
 const ReviewerInfo = styled.div`
-display: flex;
-align-self: flex-start;
-flex-direction: column;
-width: 20%;
-padding-top: 3px;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: column;
+  width: 20%;
+  padding-top: 3px;
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-end;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const User = styled.span`
@@ -65,11 +82,9 @@ const Date = styled.span`
 `;
 
 const Content = styled.p`
-  width: 80%;
   padding-right: 5px;
-  margin: 0px;
+  margin: 0px 0px 30px 0px;
   color: #212529;
   font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5em;
+  line-height: 1.7em;
 `;

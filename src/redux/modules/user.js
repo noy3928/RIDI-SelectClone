@@ -1,6 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from 'axios';
+
+import jwtDecode from "jwt-decode";
+import Cookies from "universal-cookie";
+import api from "../../shared/API";
+
+const cookies = new Cookies();
 
 // Action
 const SET_USER = "SET_USER";
@@ -18,69 +23,61 @@ const initailState = {
 
 const signupAPI = (id, pwd, pwd_check) => {
   return function (dispatch, getState, { history }) {
-    axios({
-      method: "post",
-      url: "http://3.36.103.48/user/signup",
-      data: {
+    api
+      .post(`/user/signup`, {
         "username": id,
         "password": pwd,
         "passwordChecker": pwd_check,
-      }
-    }).then((response) => {
-      history.replace('/login');
-      console.log("회원가입 성공");
-    }).catch((error) => {
-      console.log("회원가입 실패", error);
-    })
+      })
+      .then((response) => {
+        history.replace('/login');
+        console.log("회원가입 성공");
+      })
+      .catch((error) => {
+        console.log("회원가입 실패", error);
+      })
   }
 }
 
 const loginAPI = (id, pwd) => {
   return function (dispatch, getState, { history }) {
-    axios({
-      method: "post",
-      url: "http://3.36.103.48/user/login",
-      data: {
+    api
+      .post(`user/login`, {
         "username": id,
         "password": pwd,
-      }
-    }).then((response) => {
-      console.log(response.data);
-      if (response.data) {
-        localStorage.setItem("is_token", response.data);
-        localStorage.setItem("login_id", id);
+      })
+      .then((response) => {
+        cookies.set("refresh_token", response.data);
+        const token = cookies.get("refresh_token");
+        const id = jwtDecode(token).sub;
 
         dispatch(setUser({
           username: id,
         }))
         console.log("로그인 성공");
         history.push("/");
-      }
-    }).catch((error) => {
-      console.log("로그인 실패");
-    })
+
+      })
+      .catch((error) => {
+        console.log("로그인 실패");
+      })
   }
 }
 
-const logOutLocalStorage = () => {
+const logOutRemoveCookie = () => {
   return function (dispatch, getState, { history }) {
-    localStorage.removeItem("is_token");
-    localStorage.removeItem("login_id");
     dispatch(logOut());
+    console.log("로그아웃 성공")
   }
 }
 
-const loginCheckStorage = () => {
+const loginCheck = () => {
   return function (dispatch, getState, { history }) {
-    const token = localStorage.getItem("is_token");
-    const id = localStorage.getItem("login_id");
-    if (!token) {
-      return;
-    } else {
-      dispatch(setUser({
-        username: id,
-      }))
-    }
+    const token = cookies.get("refresh_token");
+    const id = jwtDecode(token).sub;
+    dispatch(setUser({
+      username: id,
+    }))
   }
 }
 
@@ -92,6 +89,8 @@ export default handleActions(
       draft.is_login = true;
     }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {
+      window.location.reload();
+      cookies.remove("refresh_token");
       draft.user = null;
       draft.is_login = false;
     })
@@ -102,8 +101,8 @@ export default handleActions(
 const actionCreators = {
   signupAPI,
   loginAPI,
-  logOutLocalStorage,
-  loginCheckStorage,
+  logOutRemoveCookie,
+  loginCheck,
 }
 
 export { actionCreators };
