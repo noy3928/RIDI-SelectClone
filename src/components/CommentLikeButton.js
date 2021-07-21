@@ -15,6 +15,8 @@ const CommentLikeButton = (props) => {
   const username = useSelector((store) => store.user.username);
   // 현재 내가 누른 댓글id 찾기
   const commentId = props.id;
+  const likesCount = useSelector(state => state.review.review[0].likesCount)
+  console.log(likesCount)
 
   const [is_like, setIsLike] = useState(false);
 
@@ -47,9 +49,9 @@ const CommentLikeButton = (props) => {
       </Wrapper>
       <Wrapper>
         {is_like ?
-          <LikeWrapper onClick={cancelLike}> <LikeBtnClick />0
+          <LikeWrapper onClick={cancelLike}> <LikeBtnClick />
           </LikeWrapper>
-          : <LikeWrapper onClick={addLike}> <LikeBtn /> 0
+          : <LikeWrapper onClick={addLike}> <LikeBtn /> 
           </LikeWrapper>
         }
       </Wrapper>

@@ -19,7 +19,7 @@ const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
 const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 
-const addLike = createAction(ADD_LIKE, (like) => ({ like }));
+const addLike = createAction(ADD_LIKE, (commentId) => ({ commentId }));
 const cancelLike = createAction(CANCEL_LIKE, (like) => ({ like }));
 
 // initailState
@@ -120,7 +120,7 @@ const addLikeAPI = (username, commentId) => {
       })
       .then((response) => {
         console.log(response);
-        dispatch(addLike(true));
+        dispatch(addLike(commentId));
         console.log("좋아요 성공");
       })
       .catch((error) => {
@@ -169,10 +169,25 @@ export default handleActions(
     }),
 
     [ADD_LIKE]: (state, action) => produce(state, (draft) => {
-      // draft.like = action.payload.like;
-      console.log(draft.review[0]);
-      // draft.review.likesItChecker = action.payload.like;
-      // draft.review.review.likesCount += 1;
+
+      let idx = draft.review.findIndex(
+        (l) => l.id === action.payload.commentId
+      );
+      
+      if (draft.review[idx].likeItChecker) {
+        draft.review[idx] = {
+          ...draft.review[idx],
+          likesCount: draft.review[idx].likesCount - 1,
+          likeItChecker: !draft.review[idx].likeItChecker,
+        };
+      } else {
+        draft.review[idx] = {
+          ...draft.review[idx],
+          likesCount: draft.review[idx].likesCount + 1,
+          likeItChecker: !draft.review[idx].likeItChecker,
+        };
+      }
+
     }),
     [CANCEL_LIKE]: (state, action) => produce(state, (draft) => {
       draft.review.likesItChecker = false;
