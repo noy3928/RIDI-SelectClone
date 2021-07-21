@@ -13,12 +13,11 @@ const WRITE_TEXT = "WRITE_TEXT";
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
 const getReview = createAction(GET_REVIEW, (review) => ({ review }));
 const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
-const deleteReview = createAction(DELETE_REVIEW, (id) => ({ id }));
+const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 
 // initailState
 const initailState = {
-  list: [],
   review: [],
   text: null,
 }
@@ -30,14 +29,17 @@ const writeTextPage = (value) => {
   }
 }
 
-const addReviewAPI = (comments) => {
+// 리뷰 추가 API
+const addReviewAPI = (comments, username, id) => {
   return function (dispatch, getState, { history }) {
-    console.log(comments);
-
     api
-      .post(`/comment`, comments)
+      .post(`/comment`, {
+        comments: comments,
+        username: username,
+        bookId: id,
+        stars: 4
+      })
       .then((response) => {
-        console.log(response.data.comments);
         dispatch(writeTextPage(response.data.comments));
         dispatch(addReview(response.data));
         console.log("리뷰 작성 완료");
@@ -48,7 +50,7 @@ const addReviewAPI = (comments) => {
   }
 }
 
-// 리뷰 add한거 읽어오기
+// 리뷰 가져오기 API
 const getReviewAPI = (bookId) => {
   return function (dispatch, getState, { history }) {
     api
@@ -64,6 +66,19 @@ const getReviewAPI = (bookId) => {
   }
 }
 
+// 내가 쓴 리뷰 가져오기 API
+// const getMyReviewAPI = () => {
+//   return function (dispatch, getState, { history }) {
+//     api
+//       .get(`/usercomment/${bookId}`, {
+//         "isWrited": true / false,
+//         "comments": "comments",
+//         "stars": 4
+//       })
+//   }
+// }
+
+// 리뷰 수정 API
 const editReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
     const id = comments.id;
@@ -82,6 +97,7 @@ const editReviewAPI = (comments) => {
   }
 }
 
+// 리뷰 삭제 API
 const deleteReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
     const id = comments.id;

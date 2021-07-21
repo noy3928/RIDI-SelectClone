@@ -15,11 +15,11 @@ const ReviewWrite = (props) => {
   const { id } = props;
 
   const is_login = useSelector((store) => store.user.is_login);
-  const _username = useSelector((store) => store.user.username);
+  const username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
   // 내가 쓴 리뷰만 가져오기
-  const _comments = reviewList.find(l => l.username === _username);
+  const _comments = reviewList.find(l => l.username === username);
   const [comments, setComments] = useState("");
 
   // 리뷰작성확인
@@ -33,15 +33,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-
-    dispatch(reviewActions.addReviewAPI(
-      {
-        comments: comments,
-        username: _username,
-        bookId: id,
-        stars: 4
-      }
-    ));
+    dispatch(reviewActions.addReviewAPI(comments, username, id));
     setComments(comments);
     dispatch(reviewActions.writeTextPage(comments));
     setIsEdit(true);
@@ -68,13 +60,13 @@ const ReviewWrite = (props) => {
 
   useEffect(() => {
     const getUserName = reviewList.map(l => l.username)
-    const searchUser = getUserName.filter((l) => l === _username);
+    const searchUser = getUserName.filter((l) => l === username);
 
     if (searchUser.length === 0) {
       setIsEdit(false);
       return;
     }
-    if (is_login && (searchUser[0] === _username)) {
+    if (is_login && (searchUser[0] === username)) {
       setIsEdit(true);
       setComments(_comments.comments);
     }

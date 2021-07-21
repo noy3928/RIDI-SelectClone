@@ -10,15 +10,16 @@ import styled from 'styled-components';
 import Main from "../pages/Main"
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { getCookie } from './Cookie';
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const token = localStorage.getItem("is_token");
-  const _is_token = localStorage.getItem(token) ? true : false;
+  const token = getCookie("refresh_token");
 
   useEffect(() => {
-    dispatch(userActions.loginCheckStorage());
+    if (token) {
+      dispatch(userActions.loginCheck());
+    }
   }, []);
 
   return (
