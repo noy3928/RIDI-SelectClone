@@ -19,7 +19,7 @@ const ReviewList = (props) => {
     <ListWrapper>
       {comment_list.map(c => {
         return (
-          <ReviewItem key={c.id} {...c} />
+          <ReviewItem key={c.id} {...c} cid={id} />
         )
       })}
     </ListWrapper>

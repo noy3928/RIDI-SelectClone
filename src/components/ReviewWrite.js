@@ -19,7 +19,7 @@ const ReviewWrite = (props) => {
   const reviewList = useSelector((store) => store.review.review);
 
   // 내가 쓴 리뷰만 가져오기
-  const _comments = reviewList.find(l => l.username === username);
+  const myComments = reviewList.find(l => l.username === username);
   const [comments, setComments] = useState("");
 
   // 리뷰작성확인
@@ -42,8 +42,8 @@ const ReviewWrite = (props) => {
   //댓글 수정
   const editComment = () => {
     dispatch(reviewActions.editReviewAPI({
-      bookId: _comments.bookId,
-      id: _comments.id,
+      bookId: myComments.bookId,
+      id: myComments.id,
       comments: comments,
     }));
   }
@@ -51,8 +51,8 @@ const ReviewWrite = (props) => {
   //댓글 삭제
   const deleteComment = () => {
     dispatch(reviewActions.deleteReviewAPI({
-      bookId: _comments.bookId,
-      id: _comments.id,
+      bookId: myComments.bookId,
+      id: myComments.id,
       comments: comments,
     }));
     setComments("");
@@ -68,7 +68,7 @@ const ReviewWrite = (props) => {
     }
     if (is_login && (searchUser[0] === username)) {
       setIsEdit(true);
-      setComments(_comments.comments);
+      setComments(myComments.comments);
     }
   }, [reviewList]);
 

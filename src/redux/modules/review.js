@@ -9,12 +9,18 @@ const EDIT_REVIEW = "EDIT_REVIEW";
 const DELETE_REVIEW = "DELETE_REVIEW";
 const WRITE_TEXT = "WRITE_TEXT";
 
+const ADD_LIKE = "ADD_LIKE";
+const CANCEL_LIKE = "CANCEL_LIKE";
+
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
 const getReview = createAction(GET_REVIEW, (review) => ({ review }));
 const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
 const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
+
+const addLike = createAction(ADD_LIKE, (like) => ({ like }));
+const cancelLike = createAction(CANCEL_LIKE, (like) => ({ like }));
 
 // initailState
 const initailState = {
@@ -66,18 +72,6 @@ const getReviewAPI = (bookId) => {
   }
 }
 
-// 내가 쓴 리뷰 가져오기 API
-// const getMyReviewAPI = () => {
-//   return function (dispatch, getState, { history }) {
-//     api
-//       .get(`/usercomment/${bookId}`, {
-//         "isWrited": true / false,
-//         "comments": "comments",
-//         "stars": 4
-//       })
-//   }
-// }
-
 // 리뷰 수정 API
 const editReviewAPI = (comments) => {
   return function (dispatch, getState, { history }) {
@@ -116,6 +110,45 @@ const deleteReviewAPI = (comments) => {
   }
 }
 
+// 좋아요 클릭
+const addLikeAPI = (username, commentId) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .post(`/likeIt/${commentId}`, {
+        username: username,
+        commentId: commentId
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch(addLike(true));
+        console.log("좋아요 성공");
+      })
+      .catch((error) => {
+        console.log("좋아요 실패", error);
+      })
+  }
+}
+
+// 좋아요 취소
+const cancelLikeAPI = (username, commentId) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .post(`/likeIt/${commentId}`, {
+        username: username,
+        commentId: commentId
+      })
+      .then((response) => {
+        console.log(response.data);
+        dispatch(cancelLike(response.data));
+        console.log("좋아요 취소 성공");
+      })
+      .catch((error) => {
+        console.log("좋아요 취소 실패", error);
+      })
+  }
+
+}
+
 // Reducer
 export default handleActions(
   {
@@ -133,6 +166,17 @@ export default handleActions(
     }),
     [DELETE_REVIEW]: (state, action) => produce(state, (draft) => {
       draft.comments = action.payload.comments;
+    }),
+
+    [ADD_LIKE]: (state, action) => produce(state, (draft) => {
+      // draft.like = action.payload.like;
+      console.log(draft.review[0]);
+      // draft.review.likesItChecker = action.payload.like;
+      // draft.review.review.likesCount += 1;
+    }),
+    [CANCEL_LIKE]: (state, action) => produce(state, (draft) => {
+      draft.review.likesItChecker = false;
+      draft.review.likesCount -= 1;
     })
   }, initailState
 )
@@ -145,6 +189,8 @@ const actionCreators = {
   getReviewAPI,
   deleteReviewAPI,
   editReviewAPI,
+  addLikeAPI,
+  cancelLikeAPI,
 }
 
 export { actionCreators };
