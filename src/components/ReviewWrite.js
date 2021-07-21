@@ -4,6 +4,9 @@ import Color from "../shared/Color";
 import { Input } from "../shared/Styles";
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
+import RatingSummary from "./RatingSummary";
+import RatingStar from "../elements/RatingStar"
+
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";
@@ -106,38 +109,70 @@ const ReviewWrite = (props) => {
     );
   } else {
     return (
-      <WriteWrapper>
-        <Input
-          border="0.5px solid #d1d5d9"
-          _onChange={onChageReview}
-          value={comments}
-          multiLine
-          placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
-        ></Input>
-        <ButtonWrapper>
-          <NoticeButton>
-            리뷰작성 유의사항
-          </NoticeButton>
-          <WriteButton
-            onClick={write}
-          >
-            리뷰 남기기
-          </WriteButton>
-        </ButtonWrapper>
-      </WriteWrapper>
+      <ReviewHeaderBox>
+        <RatingSummary/>
+        <ReviewHeaderRight>
+          <PleaseReviewBox>
+          <PleaseReviewThis>이 책을 평가해주세요!</PleaseReviewThis>
+          </PleaseReviewBox>
+          <RatingStar/>
+          <WriteWrapper>
+            <Input
+              border="2px solid #d1d5d9"
+              _onChange={onChageReview}
+              value={comments}
+              multiLine
+              placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
+            ></Input>
+            <ButtonWrapper>
+              <NoticeButton>
+                리뷰작성 유의사항
+              </NoticeButton>
+              <WriteButton
+                onClick={write}
+              >
+                리뷰 남기기
+              </WriteButton>
+            </ButtonWrapper>
+          </WriteWrapper>
+        </ReviewHeaderRight>
+      </ReviewHeaderBox>
     )
   }
 }
 
 export default ReviewWrite;
 
+const ReviewHeaderBox = styled.div`
+display:flex;
+width:800px;
+margin:30px auto;
+`
+
+const ReviewHeaderRight = styled.div`
+width:100%;
+`
+
+const PleaseReviewBox = styled.div`
+height:auto;
+width:100%;
+display:flex;
+justify-content:center;
+`
+
+const PleaseReviewThis = styled.p`
+color: #a0a7ac;
+font-size:18px;
+font-family: "NotoSansBold";
+`
+
 const WriteWrapper = styled.div`
   display: flex; 
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 40px auto;
-  width: 800px;
+  margin: 30px 0px;
+  width: 100%;
 `;
 
 const ButtonWrapper = styled.div`

@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css"
-import SwiperCore, { Navigation } from 'swiper/core';
 
 import {swiperCategoryList} from "../shared/CategoryList"
 import {actionCreators as bookActions} from "../redux/modules/book"

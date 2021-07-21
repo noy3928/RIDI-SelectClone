@@ -36,7 +36,6 @@ export default function TransitionsModal() {
 
   const currentCategory = useSelector(state => state.book.category);
   const currentCategoryName = giveCurrentCategoryName(currentCategory)
-  console.log(currentCategoryName)
 
   const handleClose = () => {
     setOpen(false);

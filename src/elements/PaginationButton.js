@@ -86,7 +86,7 @@ const PaginationButton = () => {
         )
     }
 
-    //페이지 전체 슬라이드가 10개가 넘지만, 
+    //페이지 전체 슬라이드가 10개가 넘지만, 마지막 슬라이드와 현재 슬라이드가 같지 않은 경우. 
     if(lastSlideNum !== currentSlideNum){
         const pages = _.range(startPage, startPage+10)
         return(
@@ -157,7 +157,6 @@ const PaginationBox = styled.div`
     font-size:13px;
     font-family: 'Roboto', sans-serif;
     margin: 0px 6px;
-    
 `
 
 const PageButton = styled.div`
