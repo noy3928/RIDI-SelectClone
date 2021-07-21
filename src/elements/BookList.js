@@ -13,6 +13,8 @@ const BookList = () => {
         dispatch(bookActions.loadBookAPI())
     },[])
     const book_list = useSelector((state) => state.book.book_list);
+    const test = useSelector((state) => state.book)
+    console.log(test)
 
     return(
     <MainContainer>

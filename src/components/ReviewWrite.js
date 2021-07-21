@@ -25,6 +25,9 @@ const ReviewWrite = (props) => {
   const _comments = reviewList.find(l => l.username === _username);
   const [comments, setComments] = useState("");
 
+  //별점메기기 
+  const [rateStar, setRateStar] = useState(0);
+
   // 리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
@@ -112,10 +115,7 @@ const ReviewWrite = (props) => {
       <ReviewHeaderBox>
         <RatingSummary/>
         <ReviewHeaderRight>
-          <PleaseReviewBox>
-          <PleaseReviewThis>이 책을 평가해주세요!</PleaseReviewThis>
-          </PleaseReviewBox>
-          <RatingStar/>
+          <RatingStar />
           <WriteWrapper>
             <Input
               border="2px solid #d1d5d9"
@@ -151,19 +151,6 @@ margin:30px auto;
 
 const ReviewHeaderRight = styled.div`
 width:100%;
-`
-
-const PleaseReviewBox = styled.div`
-height:auto;
-width:100%;
-display:flex;
-justify-content:center;
-`
-
-const PleaseReviewThis = styled.p`
-color: #a0a7ac;
-font-size:18px;
-font-family: "NotoSansBold";
 `
 
 const WriteWrapper = styled.div`
