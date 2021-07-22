@@ -30,7 +30,7 @@ const HeaderLine = (props) => {
               </LogoBox>
               <LoginAndSearchBox>
                 {is_login ? <Login color={"hsla(0,0%,100%,.5)"} border={"hsla(0,0%,100%,.5)"} onClick={logOut}>로그아웃</Login>
-                  : <Login onClick={() => { history.push("/login") }}>로그인</Login>
+                  : <Login color={"hsla(0,0%,100%,.5)"} border={"hsla(0,0%,100%,.5)"} onClick={() => { history.push("/login") }}>로그인</Login>
                 }
               </LoginAndSearchBox>
             </Header1>
