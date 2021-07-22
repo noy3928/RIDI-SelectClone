@@ -62,7 +62,6 @@ const loadBookAPI = (pageNumber = 1) => {
 };
 
 const getBookDetailAPI = (id) => {
-  console.log("북디테일 정보를 요청합니다")
   return function (dispatch, getState, { history }) {
 
     api.get(`/bookdetail/${id}`).then((res) => {
@@ -141,7 +140,6 @@ const actionCreators = {
   getCategoryNum,
   getBookDetailAPI,
   getPageNumAPI,
-  getBookDetailId,
 };
 export { actionCreators };
 

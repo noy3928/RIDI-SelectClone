@@ -63,7 +63,7 @@ const addReviewAPI = (comments, username, id, star) => {
       .then((response) => {
         dispatch(writeTextPage(response.data.comments));
         dispatch(addReview(response.data));
-        console.log("리뷰 작성 완료");
+        window.location.reload()
       })
       .catch((error) => {
         console.log("리뷰 작성 실패", error);
@@ -163,14 +163,10 @@ const getLikeAPI = () => {
 
 const getIsWrittenAPI = (bookId) => {
   return function (dispatch, getState, { history }) {
-    console.log("------------북 아이디 체크",bookId)
 
     api
       .get(`/usercomment/${bookId}`)
       .then((response) => {
-
-        console.log("----------getIsWritten함수가 실행됩니다.", response);
-        console.log(response.data)
         dispatch(getIsWritten(response.data))
 
       })

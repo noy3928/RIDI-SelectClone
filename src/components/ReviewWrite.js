@@ -28,7 +28,6 @@ const ReviewWrite = (props) => {
 
   // 내가 쓴 리뷰만 가져오기
   const myComments = checkWrittenUser.comments
-  console.log("------마이 코멘트 확인",myComments)
   const [comments, setComments] = useState("");
 
 
@@ -47,6 +46,7 @@ const ReviewWrite = (props) => {
       window.alert("별점을 작성해주세요.")
       return;
     }
+    console.log("------------리뷰를 작성합니다.")
     dispatch(reviewActions.addReviewAPI(comments, username, id, rateStar));
     dispatch(reviewActions.writeTextPage(comments));
     dispatch(reviewActions.isEdit(true))
@@ -86,7 +86,6 @@ const ReviewWrite = (props) => {
       dispatch(reviewActions.isEstimated(true))
       dispatch(reviewActions.getRatedStar(writtenStar))
       setComments(myComments);
-      console.log("마이 코멘트 세팅이 되고 있는건가?")
     }
 
     return()=>{

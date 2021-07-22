@@ -2,13 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Color from "../shared/Color";
 import { useSelector } from "react-redux";
+import starImg from "../img/ratingStar.svg"
+import ratedStar from "../img/ratedStar.svg"
+import _ from "lodash";
 
 
 const BookInfo = (props) => {
   const bookInfo = useSelector((state) => state.book.book_info)
   const book = bookInfo
+  const starNum = _.range(1,6)
   
   const starInfo = useSelector((state) => state.book.starInfo)
+  const averageRatingScore = starInfo.avgStars;
 
 
   return (
@@ -19,8 +24,16 @@ const BookInfo = (props) => {
           <Category>{book.categoryDetail}</Category>
           <BookName>{book.bookname}</BookName >
           <Writer>{book.bookDetailElements}</Writer >
+          <StarBox>
+          <StarRating>
+          {starNum.map((num,idx)=>{
+        return(
+            <StarImg  key={idx} imgURL={num < parseInt(averageRatingScore) + 1 ? ratedStar : starImg }></StarImg>
+    )})}
+    </StarRating>
           <Star>{starInfo.avgStars.toFixed(1)}점</Star>
           <StarWriter>({starInfo.totalCount}명)</StarWriter>
+          </StarBox>
         </InfoWrapper>
       </BookWrapper>
     </BookConatiner>
@@ -28,6 +41,22 @@ const BookInfo = (props) => {
 }
 
 export default BookInfo;
+const StarBox = styled.div`
+display:flex;
+`
+
+const StarRating = styled.div`
+display:flex;
+justify-content:center;
+margin-right:7px;
+`
+
+const StarImg = styled.div`
+background-image:url(${(props) => props.imgURL ? `${props.imgURL}`: starImg});
+background-repeat: no-repeat;
+width:16px;
+height:16px;
+`
 
 const BookConatiner = styled.div`
   background-image: ${(props) => (props.url ? `url(${props.url});`:"")}

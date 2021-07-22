@@ -1,14 +1,18 @@
 import React,{useEffect} from "react";
 import styled from "styled-components";
-import startImg from "../img/ratingStar.svg"
+import starImg from "../img/ratingStar.svg"
+import ratedStar from "../img/ratedStar.svg"
 import graphStar from "../img/graphStar.svg"
 import { useSelector } from "react-redux";
+import _ from "lodash";
 
 
 const RatingSummary = () => {
     const starInfo = useSelector((state) => state.book.starInfo)
     const averageRatingScore = starInfo.avgStars;
     const totalCount = starInfo.totalCount;
+    const starNum = _.range(1,6)
+
 
     const [graphFive, setGraphFive] = React.useState(0);
     const [graphFour, setGraphFour] = React.useState(0);
@@ -33,17 +37,18 @@ const RatingSummary = () => {
         }
     },[starInfo])
 
+   
+
 
     return(
         <SummaryBox>
             <AverageRatingTitle>구매자 별점</AverageRatingTitle>
             <AverageRatingScore>{averageRatingScore.toFixed(1)}</AverageRatingScore>
             <StarRatingBox>
-                <StarImg src={startImg} />
-                <StarImg src={startImg} />
-                <StarImg src={startImg} />
-                <StarImg src={startImg} />
-                <StarImg src={startImg} />
+            {starNum.map((num,idx)=>{
+        return(
+            <StarImg  key={idx} imgURL={num < parseInt(averageRatingScore) + 1 ? ratedStar : starImg }></StarImg>
+    )})}
             </StarRatingBox>
             <RatingBarGraphListBox>
                 <RatingBarGraphList>
@@ -82,6 +87,13 @@ const RatingSummary = () => {
     )
 }
 
+const StarImg = styled.div`
+background-image:url(${(props) => props.imgURL ? `${props.imgURL}`: starImg});
+background-repeat: no-repeat;
+width:16px;
+height:16px;
+`
+
 const SummaryBox = styled.div`
 width:120px;
 height:100%;
@@ -115,12 +127,7 @@ justify-content:center;
 margin:10px 0px 15px 0px;
 `
 
-const StarImg = styled.img`
-width:auto;
-height:auto;
-max-width:16px;
-max-height:16px;
-`
+
 
 const RatingBarGraphListBox = styled.div`
 height:auto;
