@@ -31,12 +31,12 @@ const ReviewWrite = (props) => {
   const getRateStar = (num) => {
     setRateStar(num)
   }
-
-  console.log("rateStar")
+  console.log("rateStar");
 
   // 리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
+    console.log("온체인지 발생");
   }
 
   //댓글 작성
