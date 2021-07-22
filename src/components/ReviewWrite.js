@@ -18,14 +18,16 @@ const ReviewWrite = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const { id } = props;
 
-  console.log(id)
-
   const is_login = useSelector((store) => store.user.is_login);
   const username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
 
+  const checkWrittenUser = useSelector((store) => store.review.user_comment_info)
+  console.log(checkWrittenUser)
+
   // 내가 쓴 리뷰만 가져오기
-  const myComments = reviewList.find(l => l.username === username);
+  const myComments = checkWrittenUser.comments
+  console.log("------마이 코멘트 확인",myComments)
   const [comments, setComments] = useState("");
 
   //별점메기기 
@@ -43,6 +45,10 @@ const ReviewWrite = (props) => {
   const write = () => {
     if (!is_login) {
       window.alert("로그인 후 작성 가능합니다.");
+      return;
+    }
+    if(rateStar == 0){
+      window.alert("별점을 작성해주세요.")
       return;
     }
     dispatch(reviewActions.addReviewAPI(comments, username, id, rateStar));
@@ -73,20 +79,22 @@ const ReviewWrite = (props) => {
 
   useEffect(() => {
     dispatch(reviewActions.getIsWrittenAPI(id))
-    const getUserName = reviewList.map(l => l.username)
-    const searchUser = getUserName.filter((l) => l === username);
 
-    if (searchUser.length === 0) {
+    if (!checkWrittenUser) {
       setIsEdit(false);
       return;
     }
     
-    if (is_login && (searchUser[0] === username)) {
+    if (checkWrittenUser) {
       setIsEdit(true);
-      setComments(myComments.comments);
+      setComments(myComments);
     }
 
-  }, [reviewList]);
+    return()=>{
+    	setIsEdit(false);
+    }
+  }, [checkWrittenUser]);
+
 
   if (isEdit) {
     return (
@@ -118,7 +126,7 @@ const ReviewWrite = (props) => {
             </WriteWrapper>
           </ReviewHeaderRight>
         </ReviewHeaderBox>
-        <ReviewList id={id} />
+        <ReviewList id={id} isEdit={isEdit} />
       </React.Fragment>
     );
   } else {

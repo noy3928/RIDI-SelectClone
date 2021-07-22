@@ -25,7 +25,7 @@ const HeaderLine = (props) => {
         <MainHeader>
             <Header1>
               <LogoBox>
-                <LogoImg src={ridiSelectWhite} maxWidth="102px" maxHeight="16px" />
+                <LogoImg onClick={() => { history.push("/") }} src={ridiSelectWhite} maxWidth="102px" maxHeight="16px" />
                 <LogoImg src={ridiBooksWhite} maxWidth="90px" maxHeight="13px" />
               </LogoBox>
               <LoginAndSearchBox>

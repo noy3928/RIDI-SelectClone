@@ -37,7 +37,7 @@ const RatingSummary = () => {
     return(
         <SummaryBox>
             <AverageRatingTitle>구매자 별점</AverageRatingTitle>
-            <AverageRatingScore>{averageRatingScore}</AverageRatingScore>
+            <AverageRatingScore>{averageRatingScore.toFixed(1)}</AverageRatingScore>
             <StarRatingBox>
                 <StarImg src={startImg} />
                 <StarImg src={startImg} />

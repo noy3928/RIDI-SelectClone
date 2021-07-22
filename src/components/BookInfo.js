@@ -19,7 +19,7 @@ const BookInfo = (props) => {
           <Category>{book.categoryDetail}</Category>
           <BookName>{book.bookname}</BookName >
           <Writer>{book.bookDetailElements}</Writer >
-          <Star>{starInfo.avgStars}점</Star>
+          <Star>{starInfo.avgStars.toFixed(1)}점</Star>
           <StarWriter>({starInfo.totalCount}명)</StarWriter>
         </InfoWrapper>
       </BookWrapper>

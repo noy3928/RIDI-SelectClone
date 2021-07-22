@@ -7,6 +7,7 @@ const api = axios.create({
 });
 
 const USER_TOKEN = cookies.get("refresh_token");
-api.defaults.headers.common["Authorization"] = USER_TOKEN;
+console.log("------토큰을 저장합니다",USER_TOKEN)
+api.defaults.headers.common['Authorization'] = USER_TOKEN;
 
 export default api;

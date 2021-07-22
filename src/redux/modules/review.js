@@ -1,6 +1,8 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import api from "../../shared/API";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 // Action
 const ADD_REVIEW = "ADD_REVIEW";
@@ -20,12 +22,13 @@ const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 const like = createAction(LIKE, (commentId) => ({ commentId }));
 const getLike = createAction(GET_LIKE, (review) => ({ review }));
-const getIsWritten = createAction(GET_ISWRITTEN, (review)=>({review}));
+const getIsWritten = createAction(GET_ISWRITTEN, (review)=>({ review }));
 
 // initailState
 const initailState = {
   review: [],
   text: null,
+  user_comment_info: {},
 }
 
 // 리뷰 쓴 내용 화면에 기록
@@ -148,13 +151,20 @@ const getLikeAPI = () => {
 
 const getIsWrittenAPI = (bookId) => {
   return function (dispatch, getState, { history }) {
+    console.log("------------북 아이디 체크",bookId)
+
     api
       .get(`/usercomment/${bookId}`)
       .then((response) => {
-        console.log("----------유저가 작성했냐",response.data);
+
+        console.log("----------getIsWritten함수가 실행됩니다.", response);
+        console.log(response.data)
+        dispatch(getIsWritten(response.data))
+
       })
       .catch((error) => {
-        console.log("좋아요 정보 가져오기 실패", error);
+        console.log("-------getIsWritten함수", error);
+        dispatch(getIsWritten(false))
       })
   }
 }
@@ -196,6 +206,9 @@ export default handleActions(
           likeItChecker: !draft.review[idx].likeItChecker,
         };
       }
+    }),
+    [GET_ISWRITTEN] : (state, action) =>produce(state, (draft) => {
+      draft.user_comment_info = action.payload.review;
     })
   }, initailState
 )

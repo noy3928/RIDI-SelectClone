@@ -77,7 +77,6 @@ const getBookDetailAPI = (id) => {
       }else{
         starObject = {...res.data.stars, "is_null":false}
       }
-      console.log(starObject)
 
       const starInfo = {
         "avgStars" : res.data.avgStars,
