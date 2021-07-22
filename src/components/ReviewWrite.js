@@ -27,6 +27,11 @@ const ReviewWrite = (props) => {
 
   //별점메기기 
   const [rateStar, setRateStar] = useState(0);
+  const getRateStar = (num) => {
+    setRateStar(num)
+  }
+
+  console.log("rateStar")
 
   // 리뷰작성확인
   const onChageReview = (e) => {
@@ -39,7 +44,7 @@ const ReviewWrite = (props) => {
       window.alert("로그인 후 작성 가능합니다.");
       return;
     }
-    dispatch(reviewActions.addReviewAPI(comments, username, id));
+    dispatch(reviewActions.addReviewAPI(comments, username, id, rateStar));
     setComments(comments);
     dispatch(reviewActions.writeTextPage(comments));
     setIsEdit(true);
@@ -80,34 +85,40 @@ const ReviewWrite = (props) => {
 
   if (isEdit) {
     return (
-      <WriteWrapper>
-        <Input
-          border="none"
-          bgColor={Color.lightGray}
-          _onChange={onChageReview}
-          value={comments}
-          multiLine
-        ></Input>
-        <ButtonWrapper>
-          <EditDelBtnWrapper>
-            <EditButton
-              onClick={editComment}>
-              <CreateIcon />
-            </EditButton>
-            <DeleteButton
-              onClick={deleteComment}>
-              <DeleteIcon />
-            </DeleteButton>
-          </EditDelBtnWrapper>
-        </ButtonWrapper>
-      </WriteWrapper>
+      <ReviewHeaderBox>
+        <RatingSummary/>
+        <ReviewHeaderRight>
+          <RatingStar getRateStar={getRateStar}/>
+          <WriteWrapper>
+            <Input
+              border="none"
+              bgColor={Color.lightGray}
+              _onChange={onChageReview}
+              value={comments}
+              multiLine
+            ></Input>
+            <ButtonWrapper>
+              <EditDelBtnWrapper>
+                <EditButton
+                  onClick={editComment}>
+                  <CreateIcon />
+                </EditButton>
+                <DeleteButton
+                  onClick={deleteComment}>
+                  <DeleteIcon />
+                </DeleteButton>
+              </EditDelBtnWrapper>
+            </ButtonWrapper>
+          </WriteWrapper>
+        </ReviewHeaderRight>
+      </ReviewHeaderBox>
     );
   } else {
     return (
       <ReviewHeaderBox>
         <RatingSummary/>
         <ReviewHeaderRight>
-          <RatingStar />
+          <RatingStar getRateStar={getRateStar}/>
           <WriteWrapper>
             <Input
               border="2px solid #d1d5d9"

@@ -8,6 +8,14 @@ const RatingStar = (props) => {
 const starNum = _.range(1,6)
 const [changeImg, setChangeImg] = React.useState(0);
 const [estimateWord, setEstimateWord] = React.useState("")
+const [is_estimated, setIsEstimated] = React.useState(false)
+
+const setAfterClick = () => {
+    setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
+    
+}
+
+const {getRateStar} = props;
 
 const changeStarColor = (number) => {
     setChangeImg(number)
@@ -36,7 +44,7 @@ return(
         <StarRatingBox >
             {starNum.map((num,idx)=>{
                 return(
-            <StarImgDiv key={idx} nth={changeImg}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
+            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{getRateStar(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
                 <StarImg  key={idx}></StarImg>
                 <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
             </StarImgDiv>

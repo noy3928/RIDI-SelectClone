@@ -36,14 +36,14 @@ const writeTextPage = (value) => {
 }
 
 // 리뷰 추가 API
-const addReviewAPI = (comments, username, id) => {
+const addReviewAPI = (comments, username, id, star) => {
   return function (dispatch, getState, { history }) {
     api
       .post(`/comment`, {
         comments: comments,
         username: username,
         bookId: id,
-        stars: 4
+        stars: star
       })
       .then((response) => {
         dispatch(writeTextPage(response.data.comments));
@@ -173,7 +173,7 @@ export default handleActions(
       let idx = draft.review.findIndex(
         (l) => l.id === action.payload.commentId
       );
-      
+
       if (draft.review[idx].likeItChecker) {
         draft.review[idx] = {
           ...draft.review[idx],
