@@ -9,11 +9,11 @@ const ReviewList = (props) => {
   const dispatch = useDispatch();
   const comment_list = useSelector((store) => store.review.review);
 
-  const { id } = props;
+  const { id, isEdit } = props;
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));
-  }, []);
+  }, [isEdit]);
 
   return (
     <ListWrapper>

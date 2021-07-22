@@ -35,10 +35,6 @@ const CommentLikeButton = (props) => {
     dispatch(reviewAcions.LikeAPI(username, commentId));
   }
 
-  // useEffect(() => {
-  //   dispatch(reviewAcions.getLikeAPI());
-  // }, [])
-
   return (
     <Container>
       <Wrapper>

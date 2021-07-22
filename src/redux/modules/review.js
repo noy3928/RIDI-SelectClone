@@ -34,14 +34,14 @@ const writeTextPage = (value) => {
 }
 
 // 리뷰 추가 API
-const addReviewAPI = (comments, username, id) => {
+const addReviewAPI = (comments, username, id, star) => {
   return function (dispatch, getState, { history }) {
     api
       .post(`/comment`, {
         comments: comments,
         username: username,
         bookId: id,
-        stars: 4
+        stars: star
       })
       .then((response) => {
         dispatch(writeTextPage(response.data.comments));
@@ -114,9 +114,10 @@ const LikeAPI = (username, commentId) => {
       .post(`/likeIt/${commentId}`, {
         username: username,
         commentId: commentId
-      })
+      },
+      )
       .then((response) => {
-        console.log(response);
+        console.log("------------", response);
         dispatch(like(commentId));
         console.log("좋아요 성공");
       })
