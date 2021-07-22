@@ -5,14 +5,18 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 // Action
-const ADD_REVIEW = "ADD_REVIEW";
-const GET_REVIEW = "GET_REVIEW";
-const EDIT_REVIEW = "EDIT_REVIEW";
-const DELETE_REVIEW = "DELETE_REVIEW";
-const WRITE_TEXT = "WRITE_TEXT";
-const LIKE = "LIKE";
-const GET_LIKE = "GET_LIKE";
-const GET_ISWRITTEN = "GET_ISWRITTEN"
+const ADD_REVIEW = "review/ADD_REVIEW";
+const GET_REVIEW = "review/GET_REVIEW";
+const EDIT_REVIEW = "review/EDIT_REVIEW";
+const DELETE_REVIEW = "review/DELETE_REVIEW";
+const WRITE_TEXT = "review/WRITE_TEXT";
+const LIKE = "review/LIKE";
+const GET_LIKE = "review/GET_LIKE";
+const GET_ISWRITTEN = "review/GET_ISWRITTEN"
+const GET_RATEDSTAR = "review/GET_RATEDSTAR"
+const IS_EDIT = "review/IS_EDIT"
+const IS_ESTIMATED = "review/IS_ESTIMATED"
+
 
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
@@ -23,13 +27,20 @@ const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 const like = createAction(LIKE, (commentId) => ({ commentId }));
 const getLike = createAction(GET_LIKE, (review) => ({ review }));
 const getIsWritten = createAction(GET_ISWRITTEN, (review)=>({ review }));
+const getRatedStar = createAction(GET_RATEDSTAR, (num)=> ({num}));
+const isEdit = createAction(IS_EDIT, (is_edit)=> ({is_edit}));
+const isEstimated = createAction(IS_ESTIMATED, (is_estimated) => ({is_estimated}))
 
 // initailState
 const initailState = {
   review: [],
   text: null,
   user_comment_info: {},
+  get_rated_star: 0,
+  is_edit:false,
+  is_estimated:false,
 }
+
 
 // 리뷰 쓴 내용 화면에 기록
 const writeTextPage = (value) => {
@@ -37,6 +48,7 @@ const writeTextPage = (value) => {
     dispatch(writeText(value));
   }
 }
+
 
 // 리뷰 추가 API
 const addReviewAPI = (comments, username, id, star) => {
@@ -209,7 +221,17 @@ export default handleActions(
     }),
     [GET_ISWRITTEN] : (state, action) =>produce(state, (draft) => {
       draft.user_comment_info = action.payload.review;
+    }),
+    [GET_RATEDSTAR] : (state, action) => produce(state, (draft) => {
+      draft.get_rated_star = action.payload.num
+    }),
+    [IS_EDIT] : (state, action) => produce(state, (draft)=> {
+      draft.is_edit = action.payload.is_edit
+    }),
+    [IS_ESTIMATED] : (state, action) => produce(state, (draft) => {
+      draft.is_estimated = action.payload.is_estimated
     })
+
   }, initailState
 )
 
@@ -223,6 +245,9 @@ const actionCreators = {
   LikeAPI,
   getLikeAPI,
   getIsWrittenAPI,
+  getRatedStar,
+  isEdit,
+  isEstimated,
 }
 
 export { actionCreators };

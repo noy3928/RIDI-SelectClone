@@ -3,27 +3,27 @@ import styled from "styled-components"
 import starImg from "../img/ratingStar.svg"
 import ratedStar from "../img/ratedStar.svg"
 import _ from "lodash";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SatelliteSharp } from "@material-ui/icons";
+import { actionCreators as reviewActions } from "../redux/modules/review";
 
 const RatingStar = (props) => {
-const {getRateStar, isEdit} = props;
+const dispatch = useDispatch();
+const is_edit = useSelector((store) => store.review.is_edit)
 
 const starNum = _.range(1,6)
 const [changeImg, setChangeImg] = React.useState(0);
 const [estimateWord, setEstimateWord] = React.useState("")
-const [is_estimated, setIsEstimated] = React.useState(false)
-const [ratedNum, setRatedNum] = React.useState(0)
-console.log(isEdit)
+const is_estimated = useSelector(store => store.review.is_estimated)
+// const [ratedNum, setRatedNum] = React.useState(0)
 
-const writtenStar = useSelector(state => state.review.user_comment_info.stars)
+const ratedNum = useSelector(state => state.review.get_rated_star)
 
-console.log(writtenStar)
+
 
 const setAfterClick = (num) => {
-    setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
-    getRateStar(num)
-    setRatedNum(num)
+    dispatch(reviewActions.isEstimated(true)) // 평가했다는 것을 true로 바꿔줌 
+    dispatch(reviewActions.getRatedStar(num)) // 리덕스로 평가된 별점을 넘겨줌 
 }
 
 const changeStarColor = (number) => {
@@ -46,21 +46,9 @@ useEffect(()=> {
     }
 },[changeImg])
 
+console.log(is_edit)
 
 //첫 입장시 유저가 별점을 매겼는지 확인하고, 해당 별점을 화면에 띄워주기. 댓글이 작성된 것이 확인되면, 유즈 이펙트를 다시 실행. 
-useEffect(() => {
-    console.log("----레이팅 스타에서 유즈이펙트")
-
-    if(isEdit){
-        console.log("이미 작성된 별점이 왜 안나올까?")
-        setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
-        setRatedNum(writtenStar)
-    }else{
-        setIsEstimated(false)
-    }
-
-},[writtenStar])
-
 
 if(is_estimated){
     return(

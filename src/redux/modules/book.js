@@ -9,6 +9,7 @@ const GET_BOOKDETAIL = "book/GET_BOOKDETAIL"
 const CHANGE_CATEGORY = "book/CHANGE_CATEGORY";
 const GET_PAGENUM = "book/GET_PAGENUM";
 const GET_STARINFO = "book/GET_STARINFO";
+const BOOK_DETAILID = "book/BOOK_DETAILID"
 
 // ActionCreator
 const loadBooks = createAction(LOAD_BOOKS, (book_list) => ({
@@ -26,6 +27,9 @@ const getPageNum = createAction(GET_PAGENUM, (pageNum) => ({
 const getStarInfo = createAction(GET_STARINFO, (star_info) =>({
   star_info,
 }))
+const getBookDetailId = createAction(BOOK_DETAILID, (book_id) => ({
+  book_id,
+}))
 
 // initailState
 const initialState = {
@@ -41,7 +45,8 @@ const initialState = {
     star3Count: 0,
     star4Count: 0,
     star5Count: 0},
-    totalCount: 0}
+    totalCount: 0},
+  book_id: 0,
 }
 
 const loadBookAPI = (pageNumber = 1) => {
@@ -62,6 +67,7 @@ const loadBookAPI = (pageNumber = 1) => {
 };
 
 const getBookDetailAPI = (id) => {
+  console.log("북디테일 정보를 요청합니다")
   return function (dispatch, getState, { history }) {
 
     api.get(`/bookdetail/${id}`).then((res) => {
@@ -130,6 +136,10 @@ export default handleActions(
     }),
     [GET_STARINFO] : (state, action) => produce(state, (draft) => {
       draft.starInfo = action.payload.star_info
+    }),
+    [BOOK_DETAILID] : (state, action) => produce(state, (draft) => {
+      console.log("리듀서 실행이 되는가?", action.payload.book_id)
+      draft.book_id = action.payload.book_id
     })
   },
   initialState
@@ -140,6 +150,7 @@ const actionCreators = {
   getCategoryNum,
   getBookDetailAPI,
   getPageNumAPI,
+  getBookDetailId,
 };
 export { actionCreators };
 
