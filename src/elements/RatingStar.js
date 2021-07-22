@@ -1,26 +1,30 @@
 import React,{useEffect} from "react";
 import styled from "styled-components"
-import startImg from "../img/ratingStar.svg"
+import starImg from "../img/ratingStar.svg"
 import testImg from "../img/Close.svg"
 import _ from "lodash";
 
 const RatingStar = (props) => {
+const {getRateStar, is_edit} = props;
+
 const starNum = _.range(1,6)
 const [changeImg, setChangeImg] = React.useState(0);
 const [estimateWord, setEstimateWord] = React.useState("")
 const [is_estimated, setIsEstimated] = React.useState(false)
+const [ratedNum, setRatedNum] = React.useState(0)
 
-const setAfterClick = () => {
+const setAfterClick = (num) => {
     setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
-    
+    getRateStar(num)
+    setRatedNum(num)
 }
-
-const {getRateStar} = props;
 
 const changeStarColor = (number) => {
     setChangeImg(number)
 }
 
+
+//호버할 때 말풍선 글자를 실시간으로 바꿔주기 
 useEffect(()=> {
     if(changeImg===1){
         setEstimateWord("별로에요")
@@ -35,6 +39,38 @@ useEffect(()=> {
     }
 },[changeImg])
 
+
+//첫 입장시 유저가 별점을 매겼는지 확인하고, 해당 별점을 화면에 띄워주기. 댓글이 작성된 것이 확인되면, 유즈 이펙트를 다시 실행. 
+useEffect(() => {
+    if(is_edit){
+        setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
+    }
+},[is_edit])
+
+
+
+if(is_estimated){
+    return(
+        <React.Fragment>
+        <PleaseReviewBox>
+            {changeImg === 0 ? <PleaseReviewThis >내가 남긴 별점 {ratedNum} </PleaseReviewThis> : 
+            <EstimateMessage>{estimateWord}</EstimateMessage>}
+        </PleaseReviewBox>
+        <StarRatingBox >
+            {starNum.map((num,idx)=>{
+                return(
+            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
+                <StarImg  key={idx} imgURL={num < ratedNum + 1 ? testImg : starImg }></StarImg>
+                <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
+            </StarImgDiv>
+            )})}
+        </StarRatingBox>
+    </React.Fragment>
+    )
+}
+
+
+
 return(
     <React.Fragment>
         <PleaseReviewBox>
@@ -44,7 +80,7 @@ return(
         <StarRatingBox >
             {starNum.map((num,idx)=>{
                 return(
-            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{getRateStar(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
+            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
                 <StarImg  key={idx}></StarImg>
                 <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
             </StarImgDiv>
@@ -96,7 +132,7 @@ height:38px;
 `
 
 const StarImg = styled.div`
-background-image:url(${(props) => props.imgURL ? `${props.imgURL};`: startImg});
+background-image:url(${(props) => props.imgURL ? `${props.imgURL}`: starImg});
 background-repeat: no-repeat;
 width:45px;
 height:45px;

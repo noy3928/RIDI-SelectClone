@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import ReviewItem from "../components/ReviewItem";
+import ReviewItem from "./ReviewItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";
@@ -9,11 +9,11 @@ const ReviewList = (props) => {
   const dispatch = useDispatch();
   const comment_list = useSelector((store) => store.review.review);
 
-  const { id } = props;
+  const { id, isEdit } = props;
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));
-  }, []);
+  }, [isEdit]);
 
   return (
     <ListWrapper>

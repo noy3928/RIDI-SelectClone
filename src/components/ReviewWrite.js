@@ -6,6 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import RatingSummary from "./RatingSummary";
 import RatingStar from "../elements/RatingStar"
+import ReviewList from "./ReviewList";
 
 
 import { useSelector, useDispatch } from "react-redux";
@@ -81,65 +82,72 @@ const ReviewWrite = (props) => {
       setIsEdit(true);
       setComments(myComments.comments);
     }
+    
   }, [reviewList]);
 
   if (isEdit) {
     return (
-      <ReviewHeaderBox>
-        <RatingSummary/>
-        <ReviewHeaderRight>
-          <RatingStar getRateStar={getRateStar}/>
-          <WriteWrapper>
-            <Input
-              border="none"
-              bgColor={Color.lightGray}
-              _onChange={onChageReview}
-              value={comments}
-              multiLine
-            ></Input>
-            <ButtonWrapper>
-              <EditDelBtnWrapper>
-                <EditButton
-                  onClick={editComment}>
-                  <CreateIcon />
-                </EditButton>
-                <DeleteButton
-                  onClick={deleteComment}>
-                  <DeleteIcon />
-                </DeleteButton>
-              </EditDelBtnWrapper>
-            </ButtonWrapper>
-          </WriteWrapper>
-        </ReviewHeaderRight>
-      </ReviewHeaderBox>
+      <React.Fragment>
+        <ReviewHeaderBox>
+          <RatingSummary/>
+          <ReviewHeaderRight>
+            <RatingStar getRateStar={getRateStar}/>
+            <WriteWrapper>
+              <Input
+                border="none"
+                bgColor={Color.lightGray}
+                _onChange={onChageReview}
+                value={comments}
+                multiLine
+              ></Input>
+              <ButtonWrapper>
+                <EditDelBtnWrapper>
+                  <EditButton
+                    onClick={editComment}>
+                    <CreateIcon />
+                  </EditButton>
+                  <DeleteButton
+                    onClick={deleteComment}>
+                    <DeleteIcon />
+                  </DeleteButton>
+                </EditDelBtnWrapper>
+              </ButtonWrapper>
+            </WriteWrapper>
+          </ReviewHeaderRight>
+        </ReviewHeaderBox>
+        <ReviewList id={id}/>
+      </React.Fragment>
     );
   } else {
     return (
-      <ReviewHeaderBox>
-        <RatingSummary/>
-        <ReviewHeaderRight>
-          <RatingStar getRateStar={getRateStar}/>
-          <WriteWrapper>
-            <Input
-              border="2px solid #d1d5d9"
-              _onChange={onChageReview}
-              value={comments}
-              multiLine
-              placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
-            ></Input>
-            <ButtonWrapper>
-              <NoticeButton>
-                리뷰작성 유의사항
-              </NoticeButton>
-              <WriteButton
-                onClick={write}
-              >
-                리뷰 남기기
-              </WriteButton>
-            </ButtonWrapper>
-          </WriteWrapper>
-        </ReviewHeaderRight>
-      </ReviewHeaderBox>
+      <React.Fragment>
+        <ReviewHeaderBox>
+          <RatingSummary/>
+          <ReviewHeaderRight>
+            <RatingStar getRateStar={getRateStar} is_edit={isEdit}/>
+            <WriteWrapper>
+              <Input
+                border="2px solid #d1d5d9"
+                _onChange={onChageReview}
+                value={comments}
+                multiLine
+                placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 비공개될 수 있습니다."
+              ></Input>
+              <ButtonWrapper>
+                <NoticeButton>
+                  리뷰작성 유의사항
+                </NoticeButton>
+                <WriteButton
+                  onClick={write}
+                >
+                  리뷰 남기기
+                </WriteButton>
+              </ButtonWrapper>
+            </WriteWrapper>
+          </ReviewHeaderRight>
+        </ReviewHeaderBox>
+        <ReviewList id={id} isEdit={isEdit}/>
+      </React.Fragment>
     )
   }
 }

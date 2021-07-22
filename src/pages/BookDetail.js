@@ -21,7 +21,7 @@ const BookDetail = (props) => {
       <BookInfo />
       <Description />
       <ReviewWrite id={book_id} />
-      <ReviewList id={book_id} />
+      {/* <ReviewList id={book_id} /> */}
     </>
   );
 }
