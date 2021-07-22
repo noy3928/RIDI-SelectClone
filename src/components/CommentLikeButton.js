@@ -15,8 +15,8 @@ const CommentLikeButton = (props) => {
   const username = useSelector((store) => store.user.username);
   // 현재 내가 누른 댓글id 찾기
   const commentId = props.id;
-  const likesCount = useSelector(state => state.review.review[0].likesCount)
-  console.log(likesCount)
+  const likesCount = props.likesCount;
+  const likeItChecker = props.likeItChecker;
 
   const [is_like, setIsLike] = useState(false);
 
@@ -27,17 +27,13 @@ const CommentLikeButton = (props) => {
       return;
     }
     setIsLike(true);
-    dispatch(reviewAcions.addLikeAPI(username, commentId));
+    dispatch(reviewAcions.LikeAPI(username, commentId));
   }
 
   const cancelLike = () => {
     setIsLike(false);
-    dispatch(reviewAcions.cancelLikeAPI(username, commentId));
+    dispatch(reviewAcions.LikeAPI(username, commentId));
   }
-
-  // useEffect(() => {
-  //   dispatch(getReviewAPI())
-  // })
 
   return (
     <Container>
@@ -49,9 +45,9 @@ const CommentLikeButton = (props) => {
       </Wrapper>
       <Wrapper>
         {is_like ?
-          <LikeWrapper onClick={cancelLike}> <LikeBtnClick />
-          </LikeWrapper>
-          : <LikeWrapper onClick={addLike}> <LikeBtn /> 
+          <LikeWrapperClick onClick={cancelLike}> <LikeBtnClick /> {likesCount}
+          </LikeWrapperClick>
+          : <LikeWrapper onClick={addLike}> <LikeBtn /> {likesCount}
           </LikeWrapper>
         }
       </Wrapper>
@@ -129,8 +125,25 @@ const LikeWrapper = styled.button`
   align-items: center;
   border: 1px solid;
   border-color: ${Color.borderGray};
-  background: #fff;
-  color: #808991;
+  background: ${Color.white};
+  color: ${Color.basicGray};
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 5px;
+`;
+
+const LikeWrapperClick = styled.button`
+  box-sizing: border-box;
+  width: 55px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  border-color: ${Color.darkGray};
+  background: ${Color.white};
+  color: ${Color.darkGray};;
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;

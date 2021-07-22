@@ -8,9 +8,8 @@ const GET_REVIEW = "GET_REVIEW";
 const EDIT_REVIEW = "EDIT_REVIEW";
 const DELETE_REVIEW = "DELETE_REVIEW";
 const WRITE_TEXT = "WRITE_TEXT";
-
-const ADD_LIKE = "ADD_LIKE";
-const CANCEL_LIKE = "CANCEL_LIKE";
+const LIKE = "LIKE";
+const GET_LIKE = "GET_LIKE";
 
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
@@ -18,9 +17,8 @@ const getReview = createAction(GET_REVIEW, (review) => ({ review }));
 const editReview = createAction(EDIT_REVIEW, (comments) => ({ comments }));
 const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
-
-const addLike = createAction(ADD_LIKE, (commentId) => ({ commentId }));
-const cancelLike = createAction(CANCEL_LIKE, (like) => ({ like }));
+const like = createAction(LIKE, (commentId) => ({ commentId }));
+const getLike = createAction(GET_LIKE, (review) => ({ review }));
 
 // initailState
 const initailState = {
@@ -62,7 +60,6 @@ const getReviewAPI = (bookId) => {
     api
       .get(`/comment/${bookId}`)
       .then((response) => {
-        console.log(response.data);
         dispatch(getReview(response.data));
         console.log("리뷰 가져오기 성공");
       })
@@ -111,16 +108,17 @@ const deleteReviewAPI = (comments) => {
 }
 
 // 좋아요 클릭
-const addLikeAPI = (username, commentId) => {
+const LikeAPI = (username, commentId) => {
   return function (dispatch, getState, { history }) {
     api
       .post(`/likeIt/${commentId}`, {
         username: username,
         commentId: commentId
-      })
+      },
+      )
       .then((response) => {
-        console.log(response);
-        dispatch(addLike(commentId));
+        console.log("------------", response);
+        dispatch(like(commentId));
         console.log("좋아요 성공");
       })
       .catch((error) => {
@@ -129,24 +127,22 @@ const addLikeAPI = (username, commentId) => {
   }
 }
 
-// 좋아요 취소
-const cancelLikeAPI = (username, commentId) => {
+// 좋아요 정보 가져오기
+const getLikeAPI = () => {
   return function (dispatch, getState, { history }) {
+    // bookId 어디서 받아오지?
+    // 근데 좋아요만 따로 가져와야하나? 아닌 것 같음
+    const bookId = getState().review
     api
-      .post(`/likeIt/${commentId}`, {
-        username: username,
-        commentId: commentId
-      })
+      .get(`/comment/${bookId}`)
       .then((response) => {
         console.log(response.data);
-        dispatch(cancelLike(response.data));
-        console.log("좋아요 취소 성공");
+        dispatch(getLike());
       })
       .catch((error) => {
-        console.log("좋아요 취소 실패", error);
+        console.log("좋아요 정보 가져오기 실패", error);
       })
   }
-
 }
 
 // Reducer
@@ -167,13 +163,11 @@ export default handleActions(
     [DELETE_REVIEW]: (state, action) => produce(state, (draft) => {
       draft.comments = action.payload.comments;
     }),
-
-    [ADD_LIKE]: (state, action) => produce(state, (draft) => {
-
-      let idx = draft.review.findIndex(
-        (l) => l.id === action.payload.commentId
-      );
-
+    [GET_LIKE]: (state, action) => produce(state, (draft) => {
+      draft.review = action.payload.review;
+    }),
+    [LIKE]: (state, action) => produce(state, (draft) => {
+      let idx = draft.review.findIndex((l) => l.id === action.payload.commentId);
       if (draft.review[idx].likeItChecker) {
         draft.review[idx] = {
           ...draft.review[idx],
@@ -187,11 +181,6 @@ export default handleActions(
           likeItChecker: !draft.review[idx].likeItChecker,
         };
       }
-
-    }),
-    [CANCEL_LIKE]: (state, action) => produce(state, (draft) => {
-      draft.review.likesItChecker = false;
-      draft.review.likesCount -= 1;
     })
   }, initailState
 )
@@ -199,13 +188,12 @@ export default handleActions(
 // ActionCreator export
 const actionCreators = {
   writeTextPage,
-  getReview,
   addReviewAPI,
   getReviewAPI,
   deleteReviewAPI,
   editReviewAPI,
-  addLikeAPI,
-  cancelLikeAPI,
+  LikeAPI,
+  getLikeAPI,
 }
 
 export { actionCreators };
