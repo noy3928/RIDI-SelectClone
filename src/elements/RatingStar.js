@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import styled from "styled-components"
 import starImg from "../img/ratingStar.svg"
-import testImg from "../img/Close.svg"
+import ratedStar from "../img/ratedStar.svg"
 import _ from "lodash";
 
 const RatingStar = (props) => {
@@ -44,6 +44,7 @@ useEffect(()=> {
 useEffect(() => {
     if(is_edit){
         setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
+
     }
 },[is_edit])
 
@@ -53,14 +54,14 @@ if(is_estimated){
     return(
         <React.Fragment>
         <PleaseReviewBox>
-            {changeImg === 0 ? <PleaseReviewThis >내가 남긴 별점 {ratedNum} </PleaseReviewThis> : 
+            {changeImg === 0 ? <PleaseReviewThis >내가 남긴 별점 <RatingNum>{ratedNum}.0</RatingNum> </PleaseReviewThis> : 
             <EstimateMessage>{estimateWord}</EstimateMessage>}
         </PleaseReviewBox>
         <StarRatingBox >
             {starNum.map((num,idx)=>{
                 return(
             <StarImgDiv key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
-                <StarImg  key={idx} imgURL={num < ratedNum + 1 ? testImg : starImg }></StarImg>
+                <StarImg  key={idx} imgURL={num < ratedNum + 1 ? ratedStar : starImg }></StarImg>
                 <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
             </StarImgDiv>
             )})}
@@ -104,7 +105,7 @@ height:auto;
 padding-left:10px;
 position:relative;
 :nth-child(-n+${(props)=>props.nth}) > div{
-    background-image:url(${testImg});
+    background-image:url(${ratedStar});
 }
 
 `
@@ -120,6 +121,7 @@ const PleaseReviewThis = styled.p`
 color: #a0a7ac;
 font-size:18px;
 font-family: "NotoSansBold";
+margin-bottom:7px;
 `
 
 const BorderSpan = styled.span`
@@ -163,6 +165,15 @@ const EstimateMessage = styled.div`
     left:50px;
     transform:rotate(180deg);  
    }
+`
+
+const RatingNum = styled.span`
+font-size:36px;
+padding-left:8px;
+color:#fa722e;
+vertical-align: -7%;
+line-height: 1em;
+font-family: Roboto,sans-serif;
 `
 
 export default RatingStar;
