@@ -44,6 +44,9 @@ padding:16px 0px 60px 0px;
 const ThumnailBox = styled.div`
 width:auto;
 height:auto;
+// :nth-child(-n + 6){
+
+// }
 `
 
 const ThumnailImg = styled.img`

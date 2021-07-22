@@ -1,6 +1,8 @@
 import React from "react";
-import ridiSelect from "../img/ridiSelect.png"
-import ridiBooks from "../img/ridiBooks.png"
+import ridiSelect from "../img/ridiSelect.svg"
+import ridiBooks from "../img/ridiBook.svg"
+import ridiSelectWhite from "../img/ridiSelectWhite.svg"
+import ridiBooksWhite from "../img/ridiBookWhite.svg"
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,8 +25,8 @@ const HeaderLine = (props) => {
         <MainHeader>
             <Header1>
               <LogoBox>
-                <LogoImg src={ridiSelect} maxWidth="102px" maxHeight="16px" />
-                <LogoImg src={ridiBooks} maxWidth="90px" maxHeight="13px" />
+                <LogoImg src={ridiSelectWhite} maxWidth="102px" maxHeight="16px" />
+                <LogoImg src={ridiBooksWhite} maxWidth="90px" maxHeight="13px" />
               </LogoBox>
               <LoginAndSearchBox>
                 {is_login ? <Login color={"hsla(0,0%,100%,.5)"} border={"hsla(0,0%,100%,.5)"} onClick={logOut}>로그아웃</Login>
@@ -91,6 +93,9 @@ const LogoImg = styled.img`
     width: auto;
     height: auto;
     margin-right:12px;
+    :hover{
+        opacity:0.6;
+    }
 `
 
 const LoginAndSearchBox = styled.div`
