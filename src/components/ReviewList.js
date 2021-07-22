@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import ReviewItem from "../components/ReviewItem";
+import ReviewItem from "./ReviewItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";

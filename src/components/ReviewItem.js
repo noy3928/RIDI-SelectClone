@@ -4,7 +4,7 @@ import Color from "../shared/Color";
 import CommentLikeButton from "./CommentLikeButton";
 
 const ReviewItem = (props) => {
-  const { username, comments, createdAt, id } = props;
+  const { username, comments, createdAt, id, likesCount, likeItChecker } = props;
 
   return (
     <ReviewWrapper>
@@ -22,7 +22,7 @@ const ReviewItem = (props) => {
             {comments}
           </Content>
           <ButtonBox>
-            <CommentLikeButton id={id} />
+            <CommentLikeButton id={id} likesCount={likesCount} likeItChecker={likeItChecker} />
           </ButtonBox>
         </ContentBox>
       </Wrapper>

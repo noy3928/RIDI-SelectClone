@@ -105,7 +105,7 @@ const ReviewWrite = (props) => {
   } else {
     return (
       <ReviewHeaderBox>
-        <RatingSummary/>
+        <RatingSummary />
         <ReviewHeaderRight>
           <RatingStar />
           <WriteWrapper>
