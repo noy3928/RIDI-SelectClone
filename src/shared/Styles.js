@@ -43,7 +43,6 @@ const Span = styled.span`
 //Input
 const Input = (props) => {
   const {
-    onSubmit,
     bgColor,
     multiLine,
     boxShadow,
@@ -61,7 +60,6 @@ const Input = (props) => {
     padding, } = props;
 
   const styles = {
-    onSubmit: onSubmit,
     bgColor: bgColor,
     boxShadow: boxShadow,
     borderRadius: borderRadius,
@@ -115,8 +113,7 @@ const ElInput = styled.input`
 const ElTextarea = styled.textarea`
   background-color: ${({ bgColor }) => bgColor};
   box-sizing: border-box;
-  letter-spacing: -0.05em;
-  word-spacing: -0.2em;
+  letter-spacing: -0.01em;
   min-height: 112px;
   padding: 12px 15px;
   font-size: 13px;
