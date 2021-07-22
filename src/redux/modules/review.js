@@ -10,6 +10,7 @@ const DELETE_REVIEW = "DELETE_REVIEW";
 const WRITE_TEXT = "WRITE_TEXT";
 const LIKE = "LIKE";
 const GET_LIKE = "GET_LIKE";
+const GET_ISWRITTEN = "GET_ISWRITTEN"
 
 // ActionCreator
 const addReview = createAction(ADD_REVIEW, (comments) => ({ comments }));
@@ -19,6 +20,7 @@ const deleteReview = createAction(DELETE_REVIEW, (comments) => ({ comments }));
 const writeText = createAction(WRITE_TEXT, (text) => ({ text }));
 const like = createAction(LIKE, (commentId) => ({ commentId }));
 const getLike = createAction(GET_LIKE, (review) => ({ review }));
+const getIsWritten = createAction(GET_ISWRITTEN, (review)=>({review}));
 
 // initailState
 const initailState = {
@@ -61,7 +63,6 @@ const getReviewAPI = (bookId) => {
       .get(`/comment/${bookId}`)
       .then((response) => {
         dispatch(getReview(response.data));
-        console.log("리뷰 가져오기 성공");
       })
       .catch((error) => {
         console.log("리뷰 가져오기 실패", error);
@@ -145,6 +146,20 @@ const getLikeAPI = () => {
   }
 }
 
+const getIsWrittenAPI = (bookId) => {
+  return function (dispatch, getState, { history }) {
+    api
+      .get(`/usercomment/${bookId}`)
+      .then((response) => {
+        console.log("----------유저가 작성했냐",response.data);
+      })
+      .catch((error) => {
+        console.log("좋아요 정보 가져오기 실패", error);
+      })
+  }
+}
+
+
 // Reducer
 export default handleActions(
   {
@@ -194,6 +209,7 @@ const actionCreators = {
   editReviewAPI,
   LikeAPI,
   getLikeAPI,
+  getIsWrittenAPI,
 }
 
 export { actionCreators };

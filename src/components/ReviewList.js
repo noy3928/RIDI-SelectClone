@@ -4,6 +4,7 @@ import ReviewItem from "./ReviewItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as reviewActions } from "../redux/modules/review";
+import { actionCreators as bookActions } from "../redux/modules/book"
 
 const ReviewList = (props) => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const ReviewList = (props) => {
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));
+    dispatch(bookActions.getBookDetailAPI(id))
   }, [isEdit]);
 
   return (

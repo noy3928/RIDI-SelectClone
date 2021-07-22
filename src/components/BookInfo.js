@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 
 
 const BookInfo = (props) => {
-  const book_info = useSelector((state) => state.book.book_info)
-  const book = book_info
+  const bookInfo = useSelector((state) => state.book.book_info)
+  const book = bookInfo
+  
+  const starInfo = useSelector((state) => state.book.starInfo)
 
 
   return (
@@ -17,8 +19,8 @@ const BookInfo = (props) => {
           <Category>{book.categoryDetail}</Category>
           <BookName>{book.bookname}</BookName >
           <Writer>{book.bookDetailElements}</Writer >
-          <Star>4.4점</Star>
-          <StarWriter>(19명)</StarWriter>
+          <Star>{starInfo.avgStars}점</Star>
+          <StarWriter>({starInfo.totalCount}명)</StarWriter>
         </InfoWrapper>
       </BookWrapper>
     </BookConatiner>

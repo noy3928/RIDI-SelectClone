@@ -8,6 +8,7 @@ const LOAD_BOOKS = "book/LOAD_BOOKS";
 const GET_BOOKDETAIL = "book/GET_BOOKDETAIL"
 const CHANGE_CATEGORY = "book/CHANGE_CATEGORY";
 const GET_PAGENUM = "book/GET_PAGENUM";
+const GET_STARINFO = "book/GET_STARINFO";
 
 // ActionCreator
 const loadBooks = createAction(LOAD_BOOKS, (book_list) => ({
@@ -22,6 +23,9 @@ const changeCategory = createAction(CHANGE_CATEGORY, (category) => ({
 const getPageNum = createAction(GET_PAGENUM, (pageNum) => ({
   pageNum,
 }))
+const getStarInfo = createAction(GET_STARINFO, (star_info) =>({
+  star_info,
+}))
 
 // initailState
 const initialState = {
@@ -29,6 +33,15 @@ const initialState = {
   book_info: { bookIntro: "1", bookIndex: "1", publicationDate: "1", writerIntro: "1" },
   category: 100,
   pageNum: 10,
+  starInfo: {
+    avgStars: 0,
+    starDetailInfo:
+    {star1Count: 0,
+    star2Count: 0,
+    star3Count: 0,
+    star4Count: 0,
+    star5Count: 0},
+    totalCount: 0}
 }
 
 const loadBookAPI = (pageNumber = 1) => {
@@ -51,8 +64,28 @@ const loadBookAPI = (pageNumber = 1) => {
 const getBookDetailAPI = (id) => {
   return function (dispatch, getState, { history }) {
 
-    api.get(`/book/${id}`).then((res) => {
-      // console.log(res.data)
+    api.get(`/bookdetail/${id}`).then((res) => {
+      let starObject = {}
+
+      if(res.data.stars == null){
+        starObject["star5Count"] = 0;
+        starObject["star4Count"] = 0;
+        starObject["star3Count"] = 0;
+        starObject["star2Count"] = 0;
+        starObject["star1Count"] = 0;
+        starObject["is_null"] = true;
+      }else{
+        starObject = {...res.data.stars, "is_null":false}
+      }
+      console.log(starObject)
+
+      const starInfo = {
+        "avgStars" : res.data.avgStars,
+        "totalCount":res.data.countStars,
+        "starDetailInfo":starObject,
+      }
+
+      dispatch(getStarInfo(starInfo))
       dispatch(getBookDetail(res.data))
     }).catch((err) => {
       console.log("Detail load error!", err);
@@ -95,6 +128,9 @@ export default handleActions(
     }),
     [GET_PAGENUM]: (state, action) => produce(state, (draft) => {
       draft.pageNum = action.payload.pageNum
+    }),
+    [GET_STARINFO] : (state, action) => produce(state, (draft) => {
+      draft.starInfo = action.payload.star_info
     })
   },
   initialState

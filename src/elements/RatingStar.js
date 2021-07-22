@@ -5,7 +5,7 @@ import ratedStar from "../img/ratedStar.svg"
 import _ from "lodash";
 
 const RatingStar = (props) => {
-const {getRateStar, is_edit} = props;
+const {getRateStar, isEdit} = props;
 
 const starNum = _.range(1,6)
 const [changeImg, setChangeImg] = React.useState(0);
@@ -42,11 +42,11 @@ useEffect(()=> {
 
 //첫 입장시 유저가 별점을 매겼는지 확인하고, 해당 별점을 화면에 띄워주기. 댓글이 작성된 것이 확인되면, 유즈 이펙트를 다시 실행. 
 useEffect(() => {
-    if(is_edit){
+    if(isEdit){
         setIsEstimated(true) // 평가했다는 것을 true로 바꿔줌 
-
+        console.log("------이미 댓글을 작성한 사람")
     }
-},[is_edit])
+},[isEdit])
 
 
 
@@ -54,13 +54,13 @@ if(is_estimated){
     return(
         <React.Fragment>
         <PleaseReviewBox>
-            {changeImg === 0 ? <PleaseReviewThis >내가 남긴 별점 <RatingNum>{ratedNum}.0</RatingNum> </PleaseReviewThis> : 
+            {changeImg === 0 ? <PleaseReviewThis margin={"7px"} >내가 남긴 별점 <RatingNum>{ratedNum}.0</RatingNum> </PleaseReviewThis> : 
             <EstimateMessage>{estimateWord}</EstimateMessage>}
         </PleaseReviewBox>
         <StarRatingBox >
             {starNum.map((num,idx)=>{
                 return(
-            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
+            <StarImgDiv  key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
                 <StarImg  key={idx} imgURL={num < ratedNum + 1 ? ratedStar : starImg }></StarImg>
                 <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
             </StarImgDiv>
@@ -75,13 +75,13 @@ if(is_estimated){
 return(
     <React.Fragment>
         <PleaseReviewBox>
-            {changeImg === 0 ? <PleaseReviewThis >이 책을 평가해주세요!</PleaseReviewThis> : 
+            {changeImg === 0 ? <PleaseReviewThis margin={"16px"} >이 책을 평가해주세요!</PleaseReviewThis> : 
             <EstimateMessage>{estimateWord}</EstimateMessage>}
         </PleaseReviewBox>
         <StarRatingBox >
             {starNum.map((num,idx)=>{
                 return(
-            <StarImgDiv key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
+            <StarImgDiv  key={idx} nth={changeImg} onClick={()=>{setAfterClick(num)}}  onMouseOver={()=>{changeStarColor(num)}} onMouseOut={()=>{changeStarColor(0); setEstimateWord("")}}>
                 <StarImg  key={idx}></StarImg>
                 <BorderSpan background={num === 5 ? "transparent" : "#f8f9fa"}></BorderSpan>
             </StarImgDiv>
@@ -121,7 +121,7 @@ const PleaseReviewThis = styled.p`
 color: #a0a7ac;
 font-size:18px;
 font-family: "NotoSansBold";
-margin-bottom:7px;
+margin-bottom:${(props) => props.margin};
 `
 
 const BorderSpan = styled.span`

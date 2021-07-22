@@ -18,6 +18,8 @@ const ReviewWrite = (props) => {
   const [isEdit, setIsEdit] = useState(false);
   const { id } = props;
 
+  console.log(id)
+
   const is_login = useSelector((store) => store.user.is_login);
   const username = useSelector((store) => store.user.username);
   const reviewList = useSelector((store) => store.review.review);
@@ -31,12 +33,10 @@ const ReviewWrite = (props) => {
   const getRateStar = (num) => {
     setRateStar(num)
   }
-  console.log("rateStar");
 
   // 리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
-    console.log("온체인지 발생");
   }
 
   //댓글 작성
@@ -57,6 +57,7 @@ const ReviewWrite = (props) => {
       bookId: myComments.bookId,
       id: myComments.id,
       comments: comments,
+      stars:rateStar,
     }));
   }
 
@@ -71,6 +72,7 @@ const ReviewWrite = (props) => {
   }
 
   useEffect(() => {
+    dispatch(reviewActions.getIsWrittenAPI(id))
     const getUserName = reviewList.map(l => l.username)
     const searchUser = getUserName.filter((l) => l === username);
 
@@ -78,6 +80,7 @@ const ReviewWrite = (props) => {
       setIsEdit(false);
       return;
     }
+    
     if (is_login && (searchUser[0] === username)) {
       setIsEdit(true);
       setComments(myComments.comments);
@@ -91,7 +94,7 @@ const ReviewWrite = (props) => {
         <ReviewHeaderBox>
           <RatingSummary />
           <ReviewHeaderRight>
-            <RatingStar getRateStar={getRateStar} />
+            <RatingStar getRateStar={getRateStar} isEdit={isEdit} />
             <WriteWrapper>
               <Input
                 border="none"
