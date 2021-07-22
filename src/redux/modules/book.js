@@ -11,27 +11,27 @@ const GET_PAGENUM = "book/GET_PAGENUM";
 
 // ActionCreator
 const loadBooks = createAction(LOAD_BOOKS, (book_list) => ({
-    book_list,
-  }));
+  book_list,
+}));
 const getBookDetail = createAction(GET_BOOKDETAIL, (book_info) => ({
   book_info,
 }))
 const changeCategory = createAction(CHANGE_CATEGORY, (category) => ({
   category,
-  }));
-const getPageNum = createAction(GET_PAGENUM,(pageNum)=> ({
+}));
+const getPageNum = createAction(GET_PAGENUM, (pageNum) => ({
   pageNum,
 }))
 
 // initailState
 const initialState = {
   book_list: [],
-  book_info:{bookIntro:"1",bookIndex:"1",publicationDate:"1",writerIntro:"1"},
+  book_info: { bookIntro: "1", bookIndex: "1", publicationDate: "1", writerIntro: "1" },
   category: 100,
-  pageNum:10,
+  pageNum: 10,
 }
 
-const loadBookAPI = (pageNumber=1) => {
+const loadBookAPI = (pageNumber = 1) => {
   return function (dispatch, getState, { history }) {
     //함수안에 두가지 인자가 필요한데, 이 두가지 인자를 서로 다른 컴포넌트에서 받아와야하기 때문에 
     //category번호는 리덕스를 사용하기로 결정.
@@ -51,7 +51,7 @@ const loadBookAPI = (pageNumber=1) => {
 const getBookDetailAPI = (id) => {
   return function (dispatch, getState, { history }) {
 
-    api.get(`/book/${id}`).then((res)=> {
+    api.get(`/book/${id}`).then((res) => {
       // console.log(res.data)
       dispatch(getBookDetail(res.data))
     }).catch((err) => {
@@ -60,52 +60,52 @@ const getBookDetailAPI = (id) => {
   };
 }
 
-const getCategoryNum = (category=100) => {
-  return function(dispatch, getState, {history}){
+const getCategoryNum = (category = 100) => {
+  return function (dispatch, getState, { history }) {
     dispatch(changeCategory(category))
   }
 }
 
 const getPageNumAPI = () => {
-return function(dispatch, getState, {history}){
-  const category = getState().book.category;
-  api
-  .get(`/category/${category}?page=1`)
-  .then((res)=>{
-    const totalPageNum = res.data.totalPages;
-    dispatch(getPageNum(totalPageNum))
-  }).catch((err) => {
-    console.log("Getting pagenumber error!", err);
-  })
-}
+  return function (dispatch, getState, { history }) {
+    const category = getState().book.category;
+    api
+      .get(`/category/${category}?page=1`)
+      .then((res) => {
+        const totalPageNum = res.data.totalPages;
+        dispatch(getPageNum(totalPageNum))
+      }).catch((err) => {
+        console.log("Getting pagenumber error!", err);
+      })
+  }
 }
 
 // Reducer
 export default handleActions(
-    {
-      [LOAD_BOOKS]: (state, action) =>
-        produce(state, (draft) => {
-          draft.book_list = action.payload.book_list;
-        }),
-      [CHANGE_CATEGORY]:(state,action) => produce(state,(draft) => {
-        draft.category = action.payload.category;
+  {
+    [LOAD_BOOKS]: (state, action) =>
+      produce(state, (draft) => {
+        draft.book_list = action.payload.book_list;
       }),
-      [GET_BOOKDETAIL]:(state,action) => produce(state,(draft)=> {
-        draft.book_info = action.payload.book_info
-      }),
-      [GET_PAGENUM]:(state,action) => produce(state,(draft)=> {
-        draft.pageNum = action.payload.pageNum
-      })
-      },
-    initialState
-  );
+    [CHANGE_CATEGORY]: (state, action) => produce(state, (draft) => {
+      draft.category = action.payload.category;
+    }),
+    [GET_BOOKDETAIL]: (state, action) => produce(state, (draft) => {
+      draft.book_info = action.payload.book_info
+    }),
+    [GET_PAGENUM]: (state, action) => produce(state, (draft) => {
+      draft.pageNum = action.payload.pageNum
+    })
+  },
+  initialState
+);
 
-  const actionCreators = {
-    loadBookAPI,
-    getCategoryNum,
-    getBookDetailAPI,
-    getPageNumAPI,
-  };
-  export { actionCreators };
+const actionCreators = {
+  loadBookAPI,
+  getCategoryNum,
+  getBookDetailAPI,
+  getPageNumAPI,
+};
+export { actionCreators };
 
 // ActionCreator export

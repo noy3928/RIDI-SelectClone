@@ -31,12 +31,12 @@ const ReviewWrite = (props) => {
   const getRateStar = (num) => {
     setRateStar(num)
   }
-
-  console.log("rateStar")
+  console.log("rateStar");
 
   // 리뷰작성확인
   const onChageReview = (e) => {
     setComments(e.target.value);
+    console.log("온체인지 발생");
   }
 
   //댓글 작성
@@ -82,16 +82,16 @@ const ReviewWrite = (props) => {
       setIsEdit(true);
       setComments(myComments.comments);
     }
-    
+
   }, [reviewList]);
 
   if (isEdit) {
     return (
       <React.Fragment>
         <ReviewHeaderBox>
-          <RatingSummary/>
+          <RatingSummary />
           <ReviewHeaderRight>
-            <RatingStar getRateStar={getRateStar}/>
+            <RatingStar getRateStar={getRateStar} />
             <WriteWrapper>
               <Input
                 border="none"
@@ -115,16 +115,16 @@ const ReviewWrite = (props) => {
             </WriteWrapper>
           </ReviewHeaderRight>
         </ReviewHeaderBox>
-        <ReviewList id={id}/>
+        <ReviewList id={id} />
       </React.Fragment>
     );
   } else {
     return (
       <React.Fragment>
         <ReviewHeaderBox>
-          <RatingSummary/>
+          <RatingSummary />
           <ReviewHeaderRight>
-            <RatingStar getRateStar={getRateStar} is_edit={isEdit}/>
+            <RatingStar getRateStar={getRateStar} is_edit={isEdit} />
             <WriteWrapper>
               <Input
                 border="2px solid #d1d5d9"
@@ -146,7 +146,7 @@ const ReviewWrite = (props) => {
             </WriteWrapper>
           </ReviewHeaderRight>
         </ReviewHeaderBox>
-        <ReviewList id={id} isEdit={isEdit}/>
+        <ReviewList id={id} isEdit={isEdit} />
       </React.Fragment>
     )
   }
