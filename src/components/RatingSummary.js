@@ -1,14 +1,43 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
 import startImg from "../img/ratingStar.svg"
 import graphStar from "../img/graphStar.svg"
+import { useSelector } from "react-redux";
 
 
 const RatingSummary = () => {
+    const starInfo = useSelector((state) => state.book.starInfo)
+    const averageRatingScore = starInfo.avgStars;
+    const totalCount = starInfo.totalCount;
+
+    const [graphFive, setGraphFive] = React.useState(0);
+    const [graphFour, setGraphFour] = React.useState(0);
+    const [graphThree, setGraphThree] = React.useState(0);
+    const [graphTwo, setGraphTwo] = React.useState(0);
+    const [graphOne, setGraphOne] = React.useState(0);
+
+
+    useEffect(()=> {
+            if(starInfo.starDetailInfo.is_null){
+                setGraphFive(starInfo.starDetailInfo.star5Count * 100 );
+                setGraphFour(starInfo.starDetailInfo.star4Count * 100 );
+                setGraphThree(starInfo.starDetailInfo.star3Count * 100 );
+                setGraphTwo(starInfo.starDetailInfo.star2Count * 100 );
+                setGraphOne(starInfo.starDetailInfo.star1Count * 100 )
+        }else{
+            setGraphFive((starInfo.starDetailInfo.star5Count/totalCount) * 100 );
+            setGraphFour((starInfo.starDetailInfo.star4Count/totalCount) * 100 );
+            setGraphThree((starInfo.starDetailInfo.star3Count/totalCount) * 100 );
+            setGraphTwo((starInfo.starDetailInfo.star2Count/totalCount) * 100 );
+            setGraphOne((starInfo.starDetailInfo.star1Count/totalCount) * 100 )
+        }
+    },[starInfo])
+
+
     return(
         <SummaryBox>
             <AverageRatingTitle>구매자 별점</AverageRatingTitle>
-            <AverageRatingScore>4.6</AverageRatingScore>
+            <AverageRatingScore>{averageRatingScore}</AverageRatingScore>
             <StarRatingBox>
                 <StarImg src={startImg} />
                 <StarImg src={startImg} />
@@ -20,35 +49,35 @@ const RatingSummary = () => {
                 <RatingBarGraphList>
                     <GraphStarImg src={graphStar}/>5 
                         <RatingBar>
-                            <HightLightBar width={"70%"}></HightLightBar>
+                            <HightLightBar width={`${graphFive}%`}></HightLightBar>
                         </RatingBar>
                 </RatingBarGraphList>
                 <RatingBarGraphList>
                     <GraphStarImg src={graphStar}/>4 
                         <RatingBar>
-                            <HightLightBar width={"20%"}></HightLightBar>
+                            <HightLightBar width={`${graphFour}%`}></HightLightBar>
                         </RatingBar>
                 </RatingBarGraphList>
                 <RatingBarGraphList>
                     <GraphStarImg src={graphStar}/>3 
                         <RatingBar>
-                            <HightLightBar width={"10%"}></HightLightBar>
+                            <HightLightBar width={`${graphThree}%`}></HightLightBar>
                         </RatingBar>
                 </RatingBarGraphList>
                 <RatingBarGraphList>
                     <GraphStarImg src={graphStar}/>2 
                         <RatingBar>
-                            <HightLightBar width={"4%"}></HightLightBar>
+                            <HightLightBar width={`${graphTwo}%`}></HightLightBar>
                         </RatingBar>
                 </RatingBarGraphList>
                 <RatingBarGraphList>
                     <GraphStarImg src={graphStar}/>1 
                         <RatingBar>
-                            <HightLightBar width={"8%"}></HightLightBar>
+                            <HightLightBar width={`${graphOne}%`}></HightLightBar>
                         </RatingBar>
                 </RatingBarGraphList>
             </RatingBarGraphListBox>
-            <ParticipantCount>76명이 평가함</ParticipantCount>
+            <ParticipantCount>{totalCount}명이 평가함</ParticipantCount>
         </SummaryBox>
     )
 }

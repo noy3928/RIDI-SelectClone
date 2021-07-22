@@ -11,6 +11,7 @@ const cookies = new Cookies();
 const SET_USER = "SET_USER";
 const LOG_OUT = "LOG_OUT";
 
+
 // ActionCreator
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
