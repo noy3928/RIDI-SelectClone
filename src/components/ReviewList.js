@@ -11,8 +11,7 @@ const ReviewList = (props) => {
   const comment_list = useSelector((store) => store.review.review);
   const isEdit = useSelector((store) => store.review.is_edit)
 
-  const id = useSelector((store) => store.book)
-  console.log("-------북 아이디 값이 잘 나오나??", id)
+  const { id } = props;
 
   useEffect(() => {
     dispatch(reviewActions.getReviewAPI(id));

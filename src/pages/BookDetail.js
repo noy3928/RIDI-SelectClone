@@ -12,13 +12,10 @@ const BookDetail = (props) => {
   const dispatch = useDispatch();
   const book_id = props.match.params.id;
   const bgColor = useSelector((state) => state.book.book_info.bgColor)
-  console.log("------북디테일화면에서 아이디 값",parseInt(book_id))
 
   useEffect(() => {
     dispatch(bookActions.getBookDetailAPI(book_id))
-    console.log("-------19번 줄 북 아이디 값을 받아옵니다.")
-    dispatch(bookActions.getBookDetailId(parseInt(book_id)))
-    console.log("-------19번 줄 북 아이디 값을 받아옵니다.")
+
   }, [])
 
   return (
@@ -26,7 +23,7 @@ const BookDetail = (props) => {
       <HeaderLine is_detail={true} bgColor={bgColor}/>
       <BookInfo />
       <Description />
-      <ReviewWrite />
+      <ReviewWrite id={book_id} />
       <Footer/>
     </>
   );

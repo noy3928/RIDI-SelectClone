@@ -16,7 +16,7 @@ const ReviewWrite = (props) => {
   const dispatch = useDispatch();
 
   const is_edit = useSelector((store)=> store.review.is_edit);
-  const id = useSelector((store) => store.book.book_id)
+  const {id} = props
 
   const is_login = useSelector((store) => store.user.is_login);
   const username = useSelector((store) => store.user.username);
