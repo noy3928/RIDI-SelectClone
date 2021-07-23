@@ -46,13 +46,74 @@ http://ridiclone.shop/
 ## 4. 기능정보
 
 ### 1. 리디북스의 페이지네이션 구현 
+<img src="https://ifh.cc/g/LMHnGt.gif">
+
 - 클론할 리디북스와 99% 비슷한 페이지네이션을 구현했다.
 
 - 페이지를 넘어가는 방식은 버튼을 클릭할 때마다, 페이지 정보를 api를 통해 요청했다.
 
-- 한 카테고리 별로 포함하고 있는 전체 페이지 갯수를 받아오도록, api를 구성했다. 이 페이지 갯수 변수는 리덕스에서 관리하였으며, 값이 변할 때마다 버튼이 변하도록 버튼 UI를 만들었다. 한번에 보일 수 있는 버튼의 갯수는 10였기 때문에, 전체 갯수/10을 하면 페이지의 슬라이드 갯수를 구할 수 있을 것이라 판단했다.예를 들어, 페이지 갯수가 10개보다 작은 경우 슬라이드는 1개이다.페이지 갯수가 33개인 경우엔 슬라이드가 4개가 된다. 이렇게 구해진 슬라이드를 통해서 버튼 UI를 3가지 조건으로 조건 렌더링하도록 만들었다. 1)페이지 갯수가 10개보다 작은 경우, 2)현재 슬라이드가 총 슬라이드 갯수 보다 작을 경우, 3)현재 슬라이드가 전체 슬라이드 갯수와 동일한 경우로 나누었다. 
+- 한 카테고리 별로 포함하고 있는 전체 페이지 갯수를 받아오도록, api를 구성했다. 이 페이지 갯수 변수는 리덕스에서 관리하였으며, 값이 변할 때마다 버튼이 변하도록 버튼 UI를 만들었다. 한번에 보일 수 있는 버튼의 갯수는 10였기 때문에, 전체 갯수/10을 하면 페이지의 슬라이드 갯수를 구할 수 있을 것이라 판단했다. 예를 들어, 페이지 갯수가 10개보다 작은 경우 슬라이드는 1개이다.페이지 갯수가 33개인 경우엔 슬라이드가 4개가 된다. 이렇게 구해진 슬라이드를 통해서 버튼 UI를 3가지 조건으로 조건 렌더링하도록 만들었다. 1)페이지 갯수가 10개보다 작은 경우, 2)현재 슬라이드가 총 슬라이드 갯수 보다 작을 경우, 3)현재 슬라이드가 전체 슬라이드 갯수와 동일한 경우로 나누었다. 
 
-<img src="https://ifh.cc/g/LMHnGt.gif">
+```jsx
+const totalPageNum = useSelector((state) => state.book.pageNum)
+const lastSlideNum = Math.ceil(totalPageNum/10) // 전체 슬라이드의 갯수를 구하기 
+}, []);
+
+...
+
+//페이지 전체 슬라이드가 10개가 넘지만, 마지막 슬라이드와 현재 슬라이드가 같지 않은 경우. 
+    if(lastSlideNum !== currentSlideNum){
+        const pages = _.range(startPage, startPage+10)
+        return(
+        <PaginationWrapper>
+            {currentSlideNum > 1 ? <FirstPageButton onClick={()=>{
+                moveToFirstPage()
+            }}>처음</FirstPageButton> : ""}
+            {currentSlideNum > 1 ? <DotBox><Dot src={DotImg}/></DotBox> : ""}
+            {currentSlideNum > 1 ? <PrevButton onClick={()=>{clickPrevButton(); getBooksByPage(startPage-10)}}><PrevIcon src={PrevImg}/></PrevButton>: ""}
+            <PaginationBox>
+                {pages.map((page, idx)=>{
+                    return(<PageButton key={idx} className={page === currentPage ? "active" : null} onClick={()=>{
+                        getBooksByPage(page)
+                    }}>{page}</PageButton>)
+                })}
+            </PaginationBox>
+            <NextButton onClick={()=>{clickNextButton(); getBooksByPage(startPage + 10)}}>
+               <NextIcon src={NextImg}/>
+            </NextButton>
+            <DotBox><Dot src={DotImg}/></DotBox>
+            <LastPageButton onClick={()=>{
+                moveToLastPage()
+            }}>마지막</LastPageButton>
+        </PaginationWrapper>)
+
+    }
+```
+
+- 현재 클릭한 버튼을 active한 상태로 바꾸기 : 클래스 네임에 active라는 값을 넣어두고, css 파일에 active에 대한 스타일 값을 정의내려두었다. useState로 currentPage라는 값을 만들어두고, 버튼을 클릭할 때마다 해당 값이 변하게 하였고, map을 통해서 버튼을 그릴 때마다 버튼의 번호와 currentPage와 같은지를 확인해서 클래스 네임에 active값을 주는 방식으로 만들었다. 
+
+```jsx
+const [currentPage, setcurrentPage] = useState(1)
+
+//page number로 책 로드하기. 
+const getBooksByPage = (pageNumber) => {
+      dispatch(bookActions.loadBookAPI(pageNumber))
+      setcurrentPage(pageNumber) //현재 페이지 넘버를 바꿔주기
+    }
+}, []);
+
+...
+
+{pages.map((page, idx)=>{
+             return(
+	     <PageButton key={idx} 
+	     	className={page === currentPage ? "active" : null} 
+	     	onClick={()=>{ getBooksByPage(page)}}>
+	     {page}
+	     </PageButton>)
+                })}
+```
+
 
 
 
