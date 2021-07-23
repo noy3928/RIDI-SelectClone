@@ -37,8 +37,8 @@ http://ridiclone.shop/
 
 ## 3. 실행화면
 
-<img src="https://user-images.githubusercontent.com/70243735/125789215-b4ed27a2-9fc9-496a-a0cd-3c85ec01f45c.gif">
+<img src="https://ifh.cc/g/nItMMZ.gif">
 
-자세한 영상 : https://youtu.be/-e2-VfU-984
+자세한 영상 : https://www.youtube.com/watch?v=XP0aNfOb3n0
 
 <br>
