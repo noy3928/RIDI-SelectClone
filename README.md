@@ -115,7 +115,7 @@ const getBooksByPage = (pageNumber) => {
                 })}
 ```
 
-### 💥 트러블 슈팅 : 다른 카테고리로 넘어갔을 때, 현재 currentPage값과 startPage값이 초기화되지를 않아서 문제가 발생했다. 
+#### 💥 트러블 슈팅 : 다른 카테고리로 넘어갔을 때, 현재 currentPage값과 startPage값이 초기화되지를 않아서 문제가 발생했다. 
 - 카테고리가 바뀐다는 것은 전체 페이지 갯수가 바뀐다는 것이다. 그렇기 때문에 useEffect의 dependency Array를 활용해, 전체 페이지 갯수가 바뀔 때마다 현재 currentPage값과 startPage값을 초기화 시켜주었다. 
 
 ```jsx
