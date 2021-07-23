@@ -5,14 +5,14 @@ http://ridiclone.shop/
 
 <br>
 
-##👯‍♂️ 1. 제작 기간 & 팀원 소개
+## 👯‍♂️ 1. 제작 기간 & 팀원 소개
 - 2021년 7월 16일 ~ 7월 22일
 - 4인 1조 팀프로젝트
 	+ 프론트엔드 (React) : 우지음, 노예찬
   + 백엔드 (Spring) : 박응수, 김인섭 (https://github.com/peses0326/Clone_Ridibooks_BE)
 <br>
 
-##💼 2. 사용 패키지 
+## 💼 2. 사용 패키지 
 
 * **reduxjs/toolkit**
   - 데이터 전역 관리를 위한 리덕스 관리 패키지
@@ -35,7 +35,7 @@ http://ridiclone.shop/
 
 <br>
 
-##🖥 3. 실행화면
+## 🖥 3. 실행화면
 
 <img src="https://ifh.cc/g/nItMMZ.gif">
 
@@ -43,7 +43,7 @@ http://ridiclone.shop/
 
 <br>
 
-##📱 4. 기능정보
+## 📱 4. 기능정보
 
 ### 1. 리디북스의 페이지네이션 구현 
 <br>
